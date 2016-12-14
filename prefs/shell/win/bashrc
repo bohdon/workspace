@@ -1,2 +1,41 @@
 # Bohdon Sayre BASHRC
+# designed for use with Git Bash
 # gitlab.com/bohdon/workspace
+
+# cd aliases
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+
+# Utilities
+alias br='open'                        # Universal browse to folder
+alias g='git'                          # Shorter alias for git
+alias rm="rm -v"                       # Make rm always verbose
+alias cp="cp -v"                       # Make cp always verbose
+alias cpx="rsync -h --progress --update --recursive "
+alias vim='vim -p'
+alias vi='vim -p'
+alias svim="sudo vim -p"
+alias ls="ls -h -G -F"
+alias bigdirs='du -h ./ | grep -v "^-1" | grep "^[0-9]\\+G"'
+alias top="top -o cpu"
+alias dir="ls -lSrah"
+alias lad='ls -d .*(/)'                # only show dot-directories
+alias lsa='ls -a .*(.)'                # only show dot-files
+alias lss='ls -l *(s,S,t)'             # only files with setgid/setuid/sticky flag
+alias lsl='ls -l *(@[1,10])'           # only symlinks
+alias lsx='ls -l *(*[1,10])'           # only executables
+alias lsw='ls -ld *(R,W,X.^ND/)'       # world-{readable,writable,executable} files
+alias lsbig="ls -flh *(.OL[1,10])"     # display the biggest files
+alias lsd='ls -d *(/)'                 # only show directories
+alias lse='ls -d *(/^F)'               # only show empty directories
+alias lsnew="ls -rl *(D.om[1,10])"     # display the newest files
+alias lsold="ls -rtlh *(D.om[1,10])"   # display the oldest files
+alias lssmall="ls -Srl *(.oL[1,10])"   # display the smallest files
+alias grep='grep --color=tty -d skip'
+alias egrep='egrep --color=tty -d skip'
+
+dejunk() {
+     find . \( -name ".DS_Store*" -o -name "Thumbs.db" \) -exec rm '{}' ';'
+}
