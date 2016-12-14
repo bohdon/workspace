@@ -92,7 +92,3 @@ dejunk() {
      find . \( -name ".DS_Store*" -o -name "Thumbs.db" \) -exec rm '{}' ';'
 }
 
-# additionally source a local profile if found
-if [ -f ~/.zshrc_local ]; then
-. ~/.zshrc_local
-fi
