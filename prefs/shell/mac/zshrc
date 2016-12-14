@@ -1,0 +1,98 @@
+# Bohdon Sayre ZSHRC
+# gitlab.com/bohdon/workspace
+
+# Setup the path
+export PATH=/usr/local/bin:/usr/local/sbin:/usr/local/opt/ruby/bin:$PATH
+
+# cd aliases
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+
+# Utilities
+alias br='open'                        # Universal browse to folder
+alias g='git'                          # Shorter alias for git
+alias rm="rm -v"                       # Make rm always verbose
+alias cp="cp -v"                       # Make cp always verbose
+alias cpx="rsync -h --progress --update --recursive "
+alias vim='vim -p'
+alias vi='vim -p'
+alias svim="sudo vim -p"
+alias ls="ls -h -G -F"
+alias bigdirs='du -h ./ | grep -v "^-1" | grep "^[0-9]\\+G"'
+alias top="top -o cpu"
+alias dir="ls -lSrah"
+alias lad='ls -d .*(/)'                # only show dot-directories
+alias lsa='ls -a .*(.)'                # only show dot-files
+alias lss='ls -l *(s,S,t)'             # only files with setgid/setuid/sticky flag
+alias lsl='ls -l *(@[1,10])'           # only symlinks
+alias lsx='ls -l *(*[1,10])'           # only executables
+alias lsw='ls -ld *(R,W,X.^ND/)'       # world-{readable,writable,executable} files
+alias lsbig="ls -flh *(.OL[1,10])"     # display the biggest files
+alias lsd='ls -d *(/)'                 # only show directories
+alias lse='ls -d *(/^F)'               # only show empty directories
+alias lsnew="ls -rl *(D.om[1,10])"     # display the newest files
+alias lsold="ls -rtlh *(D.om[1,10])"   # display the oldest files
+alias lssmall="ls -Srl *(.oL[1,10])"   # display the smallest files
+alias grep='grep --color=tty -d skip'
+alias egrep='egrep --color=tty -d skip'
+
+setopt inc_append_history   # append history list immediately to the history file (important for multiple parallel zsh sessions!)
+setopt SHARE_HISTORY        # import new commands from the history file also in other zsh-session
+
+setopt histignorespace      # remove command lines from the history list when
+setopt correct              # try to correct the spelling if possible
+setopt hash_list_all        # Whenever a command completion is attempted, make sure \
+                            # the entire command path is hashed first.
+setopt completeinword       # not just at the end
+setopt nonomatch            # try to avoid the 'zsh: no matches found...'
+setopt nobeep               # avoid "beep"ing
+setopt extended_glob        # Extended Glob
+setopt prompt_subst
+REPORTTIME=5                # report about cpu-/system-/user-time of command if running longer than 5 secondes
+                            # watch=(notme root) # watch for everyone but me and root
+HISTFILE=~/.zsh_history
+HISTSIZE=5000
+SAVEHIST=10000 # useful for setopt append_history
+
+autoload -U colors && colors
+autoload -U compinit && compinit
+
+autoload -U colors && colors
+autoload -U compinit && compinit
+
+# Completions
+zstyle ':completion:*' completer _complete _correct
+zstyle ':completion:*:correct:*' max-errors 2 numeric
+zstyle ':completion:*:approximate:*' max-errors 2 numeric
+
+zstyle ':completion:*:(ssh|scp|sftp):*:users' ignored-patterns adm bin daemon halt lp named shutdown sync
+zstyle ':completion:*:(ssh|scp|sftp):*' users nion root
+# zstyle ':completion:*:(ssh|scp|sftp):*' hosts fiesta.cs.tu-berlin.de pepita.cs.tu-berlin.de bereshit.synflood.at cs.tu-berlin.de modprobe.de bone scenic shell.berlios.de gluck.debian.org
+
+zstyle ':completion:*:manuals' separate-sections true
+zstyle ':completion:*:man:*' menu yes select
+zstyle ':completion:*:manuals*' insert-sections true
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' special-dirs ..
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*:descriptions' format $'%{\e[0;31m%}completing %B%d%b%{\e[0m%}'
+zstyle ':completion:*:complete:-command-::commands'     ignored-patterns '(aptitude-*|html|*\~)'
+zstyle ':completion:::::'                               completer _complete _ignored
+
+
+# Show the relative path on one line
+local result="%(?,%{$fg[blue]%}>%{$reset_color%},%{$fg[red]%}>%{$reset_color%})"
+PROMPT='%{$fg[black]%}%n@%m: %~%{$reset_color%}
+${result} '
+
+
+dejunk() {
+     find . \( -name ".DS_Store*" -o -name "Thumbs.db" \) -exec rm '{}' ';'
+}
+
+# additionally source a local profile if found
+if [ -f ~/.zshrc_local ]; then
+. ~/.zshrc_local
+fi
