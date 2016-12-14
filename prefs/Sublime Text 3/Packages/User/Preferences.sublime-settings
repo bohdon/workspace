@@ -7,7 +7,6 @@
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
-		"SublimeLinter",
 		"Vintage"
 	],
 	"indent_guide_options":
@@ -28,5 +27,6 @@
 	"show_line_endings": true,
 	"theme": "Material-Theme-Darker.sublime-theme",
 	"tree_animation_enabled": false,
-	"trim_trailing_white_space_on_save": false
+	"trim_trailing_white_space_on_save": false,
+	"show_errors_inline": false,
 }
