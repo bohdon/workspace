@@ -1,0 +1,87 @@
+[alias]
+	# Basic commands
+	a = add -A
+	amod = !git diff --name-only --diff-filter=MR | xargs git add -u
+	adel = !git diff --name-only --diff-filter=D | xargs git add -u
+	dmod = diff --diff-filter=M
+	s = status
+	co = checkout
+	url = remote -v
+	u = !git add --update && git status
+	x  = commit -m
+	ff = pull --ff-only
+	purr = pull --rebase
+	move = reset --hard
+	unstage = reset HEAD
+	staged = diff --cached
+	unstaged = diff
+	current-branch = !git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||'
+	ignoreperm = config core.filemode false
+
+	# Log display from screencast, with train tracks.
+	l = log --graph --pretty=format':%C(auto)%h%C(auto)%d%Creset %s %C(white) %an, %ar%Creset'
+	la =log --graph --pretty=format':%C(auto)%h%C(auto)%d%Creset %s %C(white) %an, %ar%Creset' --all
+
+	# Alternate logging displays
+	hist = log --graph --pretty=format':%C(yellow)%h%C(blue)%d %C(yellow)%s %C(white)%an %ar %Creset' --stat --date-order
+	history = log --graph --pretty=format':%C(yellow)%h%C(blue)%d %C(yellow)%s %C(white)%an %ar %Creset' -p --date-order
+
+	# Usage: git track origin/feature-123-login-form
+	track = checkout -t
+
+	# Submodule Basics
+	subs = submodule status --recursive
+	subi = submodule init
+	subu = submodule update --recursive
+	subuir = submodule update --init --recursive
+	subsync = "submodule foreach --recursive 'git submodule sync'"
+
+	# Submodule Management
+	subf = submodule foreach --recursive 'git fetch || :'
+	subru = submodule foreach --recursive 'git remote update || :'
+	subff = submodule foreach --recursive 'git pull --ff-only || :'
+	# list all submodule urls
+	suburl = submodule foreach --recursive git remote -v
+	# show number of commits each submodule is behind origin/master
+	subb = submodule foreach --recursive --quiet \"git l HEAD..origin/master | awk 'END{print NR}' | awk '{ if ($1 > 0) print $(system(\\\"pwd\\\")) }'\"
+	# show log of all commits that are ahead or behind HEAD (b=behind, a=ahead)
+	subbl = submodule foreach --recursive \"git l HEAD..origin/master\"
+	subal = submodule foreach --recursive \"git l origin/master..HEAD\"
+	# show current branch stats for all submodules
+	subbv = submodule foreach --recursive \"git branch -av\"
+
+	# export a patch of the current diff
+	exp = diff --no-prefix
+	amend = !git log -n 1 --pretty=tformat:%s%n%n%b | git commit -F - --amend
+	alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\ = \\2/' | sort
+	wc = !git ls-files | xargs wc -l
+
+	# replaces git://host/ url with git@host: and sets as pushurl
+	pushable = !git config remote.origin.url | sed -E 's/(https?|git):\\/\\/([^\\/]*)\\//git@\\2:/' | xargs git config remote.origin.pushurl && git remote -v
+	clearpush = "!if git config remote.origin.pushurl; then git config --unset remote.origin.pushurl; fi"
+	subpushable = "submodule foreach --recursive 'git pushable'"
+	subclearpush = "submodule foreach --recursive 'git clearpush'"
+	subignoreperm = "submodule foreach --recursive 'git ignoreperm'"
+
+[apply]
+	whitespace = warn
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	ui = true
+[color "branch"]
+	current = white bold
+	local = blue
+	remote = red
+[color "decorate"]
+	HEAD = blue bold
+	branch = blue bold
+	remoteBranch = red
+[help]
+	autocorrect = 1
+[status]
+	submodule = 1
+[push]
+	# Only push branches that have been set up to track a remote branch.
+	default = current
