@@ -1,0 +1,12 @@
+<snippet>
+	<content><![CDATA[
+[SerializeField]
+private ${1:float} _${2:myVar};
+public ${1:float} ${2:myVar} {
+	get { return _${2:myVar}; }
+	set { _${2:myVar} = value; }
+}
+]]></content>
+	<scope>source.cs</scope>
+	<tabTrigger>privateproperty</tabTrigger>
+</snippet>

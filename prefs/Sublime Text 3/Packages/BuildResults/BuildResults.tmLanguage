@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileTypes</key>
+	<array/>
+	<key>name</key>
+	<string>BuildResults</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>match</key>
+			<string>.*DEBUG:.*</string>
+			<key>name</key>
+			<string>log.debug</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>.*INFO:.*</string>
+			<key>name</key>
+			<string>log.info</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>.*(?i:WARNINGS?)\ ?:.*</string>
+			<key>name</key>
+			<string>log.warning</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>.*warning\ CS.*</string>
+			<key>name</key>
+			<string>log.warning</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>.*\ [1-9]\d*\ Warning.*</string>
+			<key>name</key>
+			<string>log.warning</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>.*ERROR:.*</string>
+			<key>name</key>
+			<string>log.error</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>.*FAILED.*</string>
+			<key>name</key>
+			<string>log.error</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>.*error\ CS.*</string>
+			<key>name</key>
+			<string>log.error</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>.*\ [1-9]\d*\ Error.*</string>
+			<key>name</key>
+			<string>log.error</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>.*\ 0\ Warning.*</string>
+			<key>name</key>
+			<string>log.success</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>.*\ 0\ Error.*</string>
+			<key>name</key>
+			<string>log.success</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>.*(?i:succeeded).*</string>
+			<key>name</key>
+			<string>log.success</string>
+		</dict>
+	</array>
+	<key>scopeName</key>
+	<string>source.buildResults</string>
+	<key>uuid</key>
+	<string>1d294d65-17a8-44f9-a652-4611ee423daa</string>
+</dict>
+</plist>

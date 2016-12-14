@@ -1,0 +1,6 @@
+<snippet>
+	<content><![CDATA[
+Debug.Log("${1:$SELECTION}"); // TESTING
+]]></content>
+	<scope>source.cs</scope>
+</snippet>

@@ -1,0 +1,53 @@
+[
+	// {
+	// 	"keys": ["ctrl+."],
+	// 	"command": "insert_snippet",
+	// 	"args": {"name": "Packages/User/Python/printVar.sublime-snippet"},
+	// 	"context": [
+	// 		{ "key":"selector", "operator":"equal", "operand":"source.python" }
+	// 	]
+	// },
+	// {
+	// 	"keys": ["ctrl+shift+."],
+	// 	"command": "insert_snippet",
+	// 	"args": {"name": "Packages/User/Python/printText.sublime-snippet"},
+	// 	"context": [
+	// 		{ "key":"selector", "operator":"equal", "operand":"source.python" }
+	// 	]
+	// },
+	{
+		"keys": ["ctrl+\\"],
+		"command": "insert_snippet",
+		"args": {"name": "Packages/User/Python/debugVar.sublime-snippet"},
+		"context": [
+			{ "key":"selector", "operator":"equal", "operand":"source.python" }
+		]
+	},
+	{
+		"keys": ["ctrl+shift+\\"],
+		"command": "insert_snippet",
+		"args": {"name": "Packages/User/Python/debugText.sublime-snippet"},
+		"context": [
+			{ "key":"selector", "operator":"equal", "operand":"source.python" }
+		]
+	},
+
+
+	{
+		"keys": ["ctrl+\\"],
+		"command": "insert_snippet",
+		"args": {"name": "Packages/User/C#/debugVar.sublime-snippet"},
+		"context": [
+			{ "key":"selector", "operator":"equal", "operand":"source.cs" }
+		]
+	},
+	{
+		"keys": ["ctrl+shift+\\"],
+		"command": "insert_snippet",
+		"args": {"name": "Packages/User/C#/debugText.sublime-snippet"},
+		"context": [
+			{ "key":"selector", "operator":"equal", "operand":"source.cs" }
+		]
+	}
+	
+]
