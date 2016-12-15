@@ -12,7 +12,7 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 
 # Utilities
-alias br='open'                        # Universal browse to folder
+alias br='explorer.exe'                # Universal browse to folder
 alias g='git'                          # Shorter alias for git
 alias rm="rm -v"                       # Make rm always verbose
 alias cp="cp -v"                       # Make cp always verbose
