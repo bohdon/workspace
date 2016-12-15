@@ -1,5 +1,0 @@
-# load .profile and .bashrc files
-# .profile is unmanaged by this workspace and
-# can be modified per machine freely
-test -f ~/.profile && . ~/.profile
-test -f ~/.bashrc && . ~/.bashrc
