@@ -20,3 +20,7 @@ To setup a workspace, simply run `setup.sh`.
 # source workspace bashrc
 test -f ~/dev/workspace/prefs/shell/win/bashrc && . ~/dev/workspace/prefs/shell/win/bashrc
 ```
+
+
+### AutoHotkey utils
+Create a shortcut for each `.ahk` file in `<user>\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`
