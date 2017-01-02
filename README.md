@@ -21,6 +21,10 @@ To setup a workspace, simply run `setup.sh`.
 test -f ~/dev/workspace/prefs/shell/win/bashrc && . ~/dev/workspace/prefs/shell/win/bashrc
 ```
 
+### Explorer
+Right-click and Run With PowerShell the `.ps1` files
+
 
 ### AutoHotkey utils
 Create a shortcut for each `.ahk` file in `<user>\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`
+
