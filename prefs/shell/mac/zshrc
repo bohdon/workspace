@@ -4,6 +4,12 @@
 # Setup the path
 export PATH=/usr/local/bin:/usr/local/sbin:/usr/local/opt/ruby/bin:$PATH
 
+# modify path to support subl
+export PATH="$PATH:/Applications/Sublime Text.app/Contents/SharedSupport/bin"
+
+# modify path to support code
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+
 # cd aliases
 alias ..='cd ..'
 alias ...='cd ../..'
