@@ -1,0 +1,32 @@
+// Place your key bindings in this file to overwrite the defaults
+[
+
+// move cursor with ijklh;
+{ "key": "ctrl+i",   "command":"cursorUp", "when": "editorTextFocus" },
+{ "key": "ctrl+k",   "command":"cursorDown", "when": "editorTextFocus" },
+{ "key": "ctrl+j",   "command":"cursorLeft", "when": "editorTextFocus" },
+{ "key": "ctrl+l",   "command":"cursorRight", "when": "editorTextFocus" },
+{ "key": "ctrl+h",   "command":"cursorHome", "when": "editorTextFocus" },
+{ "key": "ctrl+;",   "command":"cursorEnd", "when": "editorTextFocus" },
+
+// move and select
+{ "key": "ctrl+shift+i",   "command":"cursorUpSelect", "when": "editorTextFocus" },
+{ "key": "ctrl+shift+cmd+i",   "command":"cursorUpSelect", "when": "editorTextFocus" },
+{ "key": "ctrl+shift+k",   "command":"cursorDownSelect", "when": "editorTextFocus" },
+{ "key": "ctrl+shift+cmd+k",   "command":"cursorDownSelect", "when": "editorTextFocus" },
+{ "key": "ctrl+shift+j",   "command":"cursorLeftSelect", "when": "editorTextFocus" },
+{ "key": "ctrl+shift+l",   "command":"cursorRightSelect", "when": "editorTextFocus" },
+{ "key": "ctrl+shift+h",   "command":"cursorHomeSelect", "when": "editorTextFocus" },
+{ "key": "ctrl+shift+;",   "command":"cursorEndSelect", "when": "editorTextFocus" },
+
+// move by word
+{ "key": "ctrl+cmd+j",   "command":"cursorWordStartLeft", "when": "editorTextFocus" },
+{ "key": "ctrl+cmd+l",   "command":"cursorWordEndRight", "when": "editorTextFocus" },
+{ "key": "ctrl+cmd+shift+j",   "command":"cursorWordStartLeftSelect", "when": "editorTextFocus" },
+{ "key": "ctrl+cmd+shift+l",   "command":"cursorWordEndRightSelect", "when": "editorTextFocus" },
+
+// move line up / down
+{ "key": "ctrl+cmd+i",   "command":"editor.action.moveLinesUpAction", "when": "editorFocus && !editorReadonly" },
+{ "key": "ctrl+cmd+k",   "command":"editor.action.moveLinesDownAction", "when": "editorFocus && !editorReadonly" }
+
+]
