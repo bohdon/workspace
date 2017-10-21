@@ -1,4 +1,6 @@
 
+cd $(dirname $0)
+
 if [ "$(uname)" == "Darwin" ]; then
 	# Do something under Mac OS X platform
 	echo "Setting up Mac workspace"
