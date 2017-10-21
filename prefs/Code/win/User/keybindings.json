@@ -11,7 +11,9 @@
 
 // move and select
 { "key": "alt+shift+i",   "command":"cursorUpSelect", "when": "editorTextFocus" },
+{ "key": "alt+shift+ctrl+i",   "command":"cursorUpSelect", "when": "editorTextFocus" },
 { "key": "alt+shift+k",   "command":"cursorDownSelect", "when": "editorTextFocus" },
+{ "key": "alt+shift+ctrl+k",   "command":"cursorDownSelect", "when": "editorTextFocus" },
 { "key": "alt+shift+j",   "command":"cursorLeftSelect", "when": "editorTextFocus" },
 { "key": "alt+shift+l",   "command":"cursorRightSelect", "when": "editorTextFocus" },
 { "key": "alt+shift+h",   "command":"cursorHomeSelect", "when": "editorTextFocus" },
