@@ -1,3 +1,10 @@
 {
-    "editor.lineHeight": 22
+    "C_Cpp.intelliSenseEngine": "Default",
+    "editor.lineHeight": 22,
+    "workbench.iconTheme": "material-icon-theme",
+    "materialTheme.cache.workbench.settings": {
+        "themeColours": "Darker"
+    },
+    "workbench.colorTheme": "Material Theme",
+    "workbench.colorCustomizations": {}
 }
