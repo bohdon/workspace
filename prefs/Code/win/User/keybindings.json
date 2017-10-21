@@ -20,9 +20,9 @@
 { "key": "alt+shift+;",   "command":"cursorEndSelect", "when": "editorTextFocus" },
 
 // move by word
-{ "key": "alt+ctrl+j",   "command":"cursorWordEndLeft", "when": "editorTextFocus" },
+{ "key": "alt+ctrl+j",   "command":"cursorWordStartLeft", "when": "editorTextFocus" },
 { "key": "alt+ctrl+l",   "command":"cursorWordEndRight", "when": "editorTextFocus" },
-{ "key": "alt+ctrl+shift+j",   "command":"cursorWordEndLeftSelect", "when": "editorTextFocus" },
+{ "key": "alt+ctrl+shift+j",   "command":"cursorWordStartLeftSelect", "when": "editorTextFocus" },
 { "key": "alt+ctrl+shift+l",   "command":"cursorWordEndRightSelect", "when": "editorTextFocus" },
 
 // move line up / down
