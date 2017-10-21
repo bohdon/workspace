@@ -27,6 +27,10 @@
 
 // move line up / down
 { "key": "ctrl+cmd+i",   "command":"editor.action.moveLinesUpAction", "when": "editorFocus && !editorReadonly" },
-{ "key": "ctrl+cmd+k",   "command":"editor.action.moveLinesDownAction", "when": "editorFocus && !editorReadonly" }
+{ "key": "ctrl+cmd+k",   "command":"editor.action.moveLinesDownAction", "when": "editorFocus && !editorReadonly" },
+
+// next / previous file via ctrl + tab
+{ "key": "ctrl+tab", "command":"workbench.action.nextEditor"},
+{ "key": "ctrl+shift+tab", "command":"workbench.action.previousEditor"}
 
 ]
