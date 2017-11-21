@@ -1,0 +1,17 @@
+{
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorTheme": "Material Theme",
+    "workbench.colorCustomizations": {},
+    "materialTheme.cache.workbench.settings": {
+        "themeColours": "Darker"
+    },
+    "window.zoomLevel": 0,
+    "sublimeTextKeymap.promptV3Features": true,
+    "editor.multiCursorModifier": "ctrlCmd",
+    "editor.snippetSuggestions": "top",
+    "editor.formatOnPaste": true,
+    "files.exclude": {
+        "**/*.pyc": true
+    },
+    "workbench.startupEditor": "newUntitledFile"
+}
