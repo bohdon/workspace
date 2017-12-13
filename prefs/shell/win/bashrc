@@ -5,6 +5,9 @@
 # modify path to add user bin
 export PATH="$PATH:$HOME/dev/bin"
 
+# modify path to add go bin
+export PATH="$PATH:$HOME/go/bin"
+
 # modify path to support subl
 export PATH="$PATH:/c/Program Files/Sublime Text 3"
 
