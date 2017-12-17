@@ -17,9 +17,15 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 
+# git aliases
+alias g='git'
+
+# docker aliases
+alias d='docker'
+alias d-c='docker-compose'
+
 # Utilities
 alias br='explorer.exe'                # Universal browse to folder
-alias g='git'                          # Shorter alias for git
 alias rm="rm -v"                       # Make rm always verbose
 alias cp="cp -v"                       # Make cp always verbose
 alias cpx="rsync -h --progress --update --recursive "
@@ -45,6 +51,8 @@ alias lssmall="ls -Srl *(.oL[1,10])"   # display the smallest files
 alias grep='grep --color=tty -d skip'
 alias egrep='egrep --color=tty -d skip'
 
+
 dejunk() {
      find . \( -name ".DS_Store*" -o -name "Thumbs.db" \) -exec rm '{}' ';'
 }
+
