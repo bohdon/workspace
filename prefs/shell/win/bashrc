@@ -1,6 +1,6 @@
 # Bohdon Sayre BASHRC
 # designed for use with Git Bash
-# gitlab.com/bohdon/workspace
+# github.com/bohdon/workspace
 
 # modify path to add user bin
 export PATH="$PATH:$HOME/dev/bin"

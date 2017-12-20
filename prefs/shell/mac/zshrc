@@ -1,5 +1,5 @@
 # Bohdon Sayre ZSHRC
-# gitlab.com/bohdon/workspace
+# github.com/bohdon/workspace
 
 # Setup the path
 export PATH=/usr/local/bin:/usr/local/sbin:/usr/local/opt/ruby/bin:$PATH
