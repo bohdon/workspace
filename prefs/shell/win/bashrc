@@ -19,6 +19,7 @@ alias .....='cd ../../../..'
 
 # git aliases
 alias g='git'
+alias gs='git status'
 
 # docker aliases
 alias d='docker'

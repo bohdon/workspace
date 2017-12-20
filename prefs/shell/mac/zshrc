@@ -16,9 +16,16 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 
+# git aliases
+alias g='git'
+alias gs='git status'
+
+# docker aliases
+alias d='docker'
+alias d-c='docker-compose'
+
 # Utilities
 alias br='open'                        # Universal browse to folder
-alias g='git'                          # Shorter alias for git
 alias rm="rm -v"                       # Make rm always verbose
 alias cp="cp -v"                       # Make cp always verbose
 alias cpx="rsync -h --progress --update --recursive "
