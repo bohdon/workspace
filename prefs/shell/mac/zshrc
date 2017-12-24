@@ -4,6 +4,9 @@
 # Setup the path
 export PATH=/usr/local/bin:/usr/local/sbin:/usr/local/opt/ruby/bin:$PATH
 
+# add go bin to path
+export PATH=$PATH:$HOME/go/bin
+
 # modify path to support subl
 export PATH="$PATH:/Applications/Sublime Text.app/Contents/SharedSupport/bin"
 
