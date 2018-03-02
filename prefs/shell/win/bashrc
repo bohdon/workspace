@@ -26,7 +26,7 @@ alias d='docker'
 alias d-c='docker-compose'
 
 # Utilities
-alias br='explorer.exe'                # Universal browse to folder
+alias open='start'                     # Universal open command
 alias rm="rm -v"                       # Make rm always verbose
 alias cp="cp -v"                       # Make cp always verbose
 alias cpx="rsync -h --progress --update --recursive "
