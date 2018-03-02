@@ -3,12 +3,13 @@
     "workbench.colorTheme": "Visual Studio Dark",
     "workbench.colorCustomizations": {},
     "sublimeTextKeymap.promptV3Features": true,
+    "editor.lineHeight": 22,
     "editor.multiCursorModifier": "ctrlCmd",
     "editor.snippetSuggestions": "top",
     "editor.formatOnPaste": true,
+    "editor.renderWhitespace": "boundary",
     "files.exclude": {
         "**/*.pyc": true
     },
-    "workbench.startupEditor": "newUntitledFile",
-    "editor.renderWhitespace": "boundary"
+    "workbench.startupEditor": "newUntitledFile"
 }

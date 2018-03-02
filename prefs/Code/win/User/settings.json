@@ -1,10 +1,15 @@
 {
-    "C_Cpp.intelliSenseEngine": "Default",
-    "editor.lineHeight": 22,
     "workbench.iconTheme": "material-icon-theme",
-    "materialTheme.cache.workbench.settings": {
-        "themeColours": "Darker"
+    "workbench.colorTheme": "Visual Studio Dark",
+    "workbench.colorCustomizations": {},
+    "sublimeTextKeymap.promptV3Features": true,
+    "editor.lineHeight": 22,
+    "editor.snippetSuggestions": "top",
+    "editor.formatOnPaste": true,
+    "editor.renderWhitespace": "boundary",
+    "files.exclude": {
+        "**/*.pyc": true
     },
-    "workbench.colorTheme": "Material Theme",
-    "workbench.colorCustomizations": {}
+    "workbench.startupEditor": "newUntitledFile",
+    "C_Cpp.intelliSenseEngine": "Default"
 }
