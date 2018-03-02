@@ -1,11 +1,7 @@
 {
     "workbench.iconTheme": "material-icon-theme",
-    "workbench.colorTheme": "Material Theme",
+    "workbench.colorTheme": "Visual Studio Dark",
     "workbench.colorCustomizations": {},
-    "materialTheme.cache.workbench.settings": {
-        "themeColours": "Darker"
-    },
-    "window.zoomLevel": 0,
     "sublimeTextKeymap.promptV3Features": true,
     "editor.multiCursorModifier": "ctrlCmd",
     "editor.snippetSuggestions": "top",
@@ -13,5 +9,6 @@
     "files.exclude": {
         "**/*.pyc": true
     },
-    "workbench.startupEditor": "newUntitledFile"
+    "workbench.startupEditor": "newUntitledFile",
+    "editor.renderWhitespace": "boundary"
 }
