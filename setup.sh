@@ -2,15 +2,14 @@
 cd $(dirname $0)
 
 if [ "$(uname)" == "Darwin" ]; then
-	# Do something under Mac OS X platform
-	echo "Setting up Mac workspace"
-	. setup_mac.sh
+	echo "Installing Mac workspace"
+	. install_mac.sh
+
 elif [ "$(expr substr $(uname -s) 1 5)" == "MINGW" ]; then
-	# Do something under Windows NT platform
-	echo "Setting up Windows workspace"
-	. setup_win.sh
+	echo "Installing Windows workspace"
+	. install_win.sh
+
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-	# Do something under GNU/Linux platform
-	echo "Setting up Linux workspace"
-	. setup_linux.sh
+	echo "Installing Linux workspace"
+	. install_linux.sh
 fi
