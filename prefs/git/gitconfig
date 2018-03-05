@@ -26,6 +26,9 @@
 	hist = log --graph --pretty=format':%C(yellow)%h%C(blue)%d %C(yellow)%s %C(white)%an %ar %Creset' --stat --date-order
 	history = log --graph --pretty=format':%C(yellow)%h%C(blue)%d %C(yellow)%s %C(white)%an %ar %Creset' -p --date-order
 
+	# show newly fetched commits
+	new = !git l HEAD^1..`git rev-parse @{u}`
+
 	# Usage: git track origin/feature-123-login-form
 	track = checkout -t
 
