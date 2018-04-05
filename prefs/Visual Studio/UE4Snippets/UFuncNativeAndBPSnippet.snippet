@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets
+    xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Native + BP Function</Title>
+      <Shortcut>nbpfunc</Shortcut>
+      <Description>Code snippet for a native function plus matching blueprint event</Description>
+      <Author>Bohdon Sayre</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>name</ID>
+          <ToolTip>The function name</ToolTip>
+          <Default>MyFunction</Default>
+        </Literal>
+        <Literal>
+          <ID>args</ID>
+          <ToolTip>The function arguments</ToolTip>
+          <Default></Default>
+        </Literal>
+      </Declarations>
+      <Code Language="cpp">
+        <![CDATA[UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "$name$"))
+        void $name$_BP($args$);
+        virtual void $name$($args$);$end$]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>
