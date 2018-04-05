@@ -29,6 +29,7 @@ alias d-c='docker-compose'
 alias open='start'                     # Universal open command
 alias rm="rm -v"                       # Make rm always verbose
 alias cp="cp -v"                       # Make cp always verbose
+alias mv="mv -v"                       # Make mv always verbose
 alias cpx="rsync -h --progress --update --recursive "
 alias vim='vim -p'
 alias vi='vim -p'
