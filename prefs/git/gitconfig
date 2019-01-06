@@ -66,6 +66,10 @@
 	subclearpush = "submodule foreach --recursive 'git clearpush'"
 	subignoreperm = "submodule foreach --recursive 'git ignoreperm'"
 
+	# open a browser to the git url
+	br = !git config remote.origin.url | sed -E 's/\\.git//g' | sed -E '/^http/! s/\\:/\\//' | sed -E 's/git\\@/http\\:\\/\\//' | xargs -I {} open {}
+	brw = !git config remote.origin.url | sed -E 's/\\.git//g' | sed -E '/^http/! s/\\:/\\//' | sed -E 's/git\\@/http\\:\\/\\//' | xargs -I {} start {}
+
 [apply]
 	whitespace = warn
 [color]
