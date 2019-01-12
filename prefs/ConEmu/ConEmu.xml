@@ -9,22 +9,22 @@
 			<value name="StartFarFolders" type="hex" data="00"/>
 			<value name="StartFarEditors" type="hex" data="00"/>
 			<value name="StartCreateDelay" type="ulong" data="100"/>
-			<value name="ColorTable00" type="dword" data="0036342e"/>
-			<value name="ColorTable01" type="dword" data="00a46534"/>
-			<value name="ColorTable02" type="dword" data="00069a4e"/>
-			<value name="ColorTable03" type="dword" data="009a9806"/>
-			<value name="ColorTable04" type="dword" data="000000cc"/>
-			<value name="ColorTable05" type="dword" data="007b5075"/>
-			<value name="ColorTable06" type="dword" data="0000a0c4"/>
-			<value name="ColorTable07" type="dword" data="00cfd7d3"/>
-			<value name="ColorTable08" type="dword" data="00535755"/>
-			<value name="ColorTable09" type="dword" data="00cf9f72"/>
-			<value name="ColorTable10" type="dword" data="0034e28a"/>
-			<value name="ColorTable11" type="dword" data="00e2e234"/>
-			<value name="ColorTable12" type="dword" data="002929ef"/>
-			<value name="ColorTable13" type="dword" data="00a87fad"/>
-			<value name="ColorTable14" type="dword" data="004fe9fc"/>
-			<value name="ColorTable15" type="dword" data="00eceeee"/>
+			<value name="ColorTable00" type="dword" data="00222827"/>
+			<value name="ColorTable01" type="dword" data="009e5401"/>
+			<value name="ColorTable02" type="dword" data="0004aa74"/>
+			<value name="ColorTable03" type="dword" data="00a6831a"/>
+			<value name="ColorTable04" type="dword" data="003403a7"/>
+			<value name="ColorTable05" type="dword" data="009c5689"/>
+			<value name="ColorTable06" type="dword" data="0049b6b6"/>
+			<value name="ColorTable07" type="dword" data="00cacaca"/>
+			<value name="ColorTable08" type="dword" data="007c7c7c"/>
+			<value name="ColorTable09" type="dword" data="00f58303"/>
+			<value name="ColorTable10" type="dword" data="0006d08d"/>
+			<value name="ColorTable11" type="dword" data="00e5c258"/>
+			<value name="ColorTable12" type="dword" data="004b04f3"/>
+			<value name="ColorTable13" type="dword" data="00b87da8"/>
+			<value name="ColorTable14" type="dword" data="0081cccc"/>
+			<value name="ColorTable15" type="dword" data="00ffffff"/>
 			<value name="ColorTable16" type="dword" data="00000000"/>
 			<value name="ColorTable17" type="dword" data="00800000"/>
 			<value name="ColorTable18" type="dword" data="00008000"/>
