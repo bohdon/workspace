@@ -4,7 +4,10 @@
 # Setup the path
 export PATH=/usr/local/bin:/usr/local/sbin:/usr/local/opt/ruby/bin:$PATH
 
-# add go bin to path
+# modify path to add user bin
+export PATH="$PATH:$HOME/bin"
+
+# modify path to add go bin
 export PATH=$PATH:$HOME/go/bin
 
 # modify path to support subl

@@ -3,7 +3,7 @@
 # github.com/bohdon/workspace
 
 # modify path to add user bin
-export PATH="$PATH:$HOME/dev/bin"
+export PATH="$PATH:$HOME/bin"
 
 # modify path to add go bin
 export PATH="$PATH:$HOME/go/bin"
