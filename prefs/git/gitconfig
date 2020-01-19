@@ -5,6 +5,7 @@
 	adel = !git diff --name-only --diff-filter=D | xargs git add -u
 	dmod = diff --diff-filter=M
 	s = status
+	st = status -uno
 	co = checkout
 	url = remote -v
 	u = !git add --update && git status
