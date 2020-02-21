@@ -3,6 +3,11 @@ if should_install "All"; then
     INSTALL_ALL=true
 fi
 
+# Explorer Settings
+if should_install "Explorer prefs"; then
+    powershell -ExecutionPolicy Bypass -File "prefs\Explorer\SetExplorerSettings.ps1"
+fi
+
 # Visual Studio Code
 if should_install "Visual Studio Code prefs"; then
     cp -av "prefs/Code/win/." "$HOME/AppData/Roaming/Code/"
