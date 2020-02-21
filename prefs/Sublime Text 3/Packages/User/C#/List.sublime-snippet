@@ -1,6 +1,0 @@
-<snippet>
-    <content><![CDATA[List<${1:T}> ${2:myList} = new List<${1}>();$0]]></content>
-    <tabTrigger>List</tabTrigger>
-    <scope>source.cs</scope>
-    <description>List&lt;T&gt;</description>
-</snippet>

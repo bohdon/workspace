@@ -18,11 +18,6 @@ if should_install "Visual Studio Code prefs"; then
     cp -av "prefs/Code/win/." "$HOME/AppData/Roaming/Code/"
 fi
 
-# Sublime Text 3
-if should_install "Sublime Text 3 prefs"; then
-    cp -av "prefs/Sublime Text 3/." "$HOME/AppData/Roaming/Sublime Text 3/"
-fi
-
 # Git Config
 if should_install "Git Config"; then
     set -x

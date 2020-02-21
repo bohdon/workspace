@@ -1,6 +1,0 @@
-<snippet>
-	<content><![CDATA[
-Debug.Log(string.Format("${1:$SELECTION}: {0}", $SELECTION)); // TESTING
-]]></content>
-	<scope>source.cs</scope>
-</snippet>
