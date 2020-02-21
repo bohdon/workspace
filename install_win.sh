@@ -5,7 +5,12 @@ fi
 
 # Explorer Settings
 if should_install "Explorer prefs"; then
-    powershell -ExecutionPolicy Bypass -File "prefs\Explorer\SetExplorerSettings.ps1"
+    powershell -ExecutionPolicy Bypass -File "prefs/Explorer/SetExplorerSettings.ps1"
+fi
+
+# Caps Loc to Control
+if should_install "Caps Lock as Control"; then
+    regedit.exe "prefs/Windows/CapsLockMappedToControl.reg"
 fi
 
 # Visual Studio Code
