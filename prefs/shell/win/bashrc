@@ -2,14 +2,18 @@
 # designed for use with Git Bash
 # github.com/bohdon/workspace
 
-# modify path to add user bin
+# add user bin to PATH
 export PATH="$PATH:$HOME/bin"
-
-# modify path to add go bin
+# go bin to PATH
 export PATH="$PATH:$HOME/go/bin"
 
-# modify path to support subl
-export PATH="$PATH:/c/Program Files/Sublime Text 3"
+# add workspace bin to PATH
+add_workspace_bin() {
+     local workspace_dir=$(readlink -f $(dirname ${BASH_SOURCE[0]})/../../../)
+     export PATH="$PATH:$workspace_dir/bin"
+}
+add_workspace_bin
+unset -f add_workspace_bin
 
 # cd aliases
 alias ..='cd ..'
