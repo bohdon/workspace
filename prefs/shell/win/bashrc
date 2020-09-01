@@ -57,6 +57,7 @@ alias lssmall="ls -Srl *(.oL[1,10])"   # display the smallest files
 alias grep='grep --color=tty -d skip'
 alias egrep='egrep --color=tty -d skip'
 
+alias notes='code ~/Documents/Notes.txt'
 
 dejunk() {
      find . \( -name ".DS_Store*" -o -name "Thumbs.db" \) -exec rm '{}' ';'
