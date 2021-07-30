@@ -12,11 +12,3 @@ Set-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\
 
 # Disable shake-to-minimze
 Set-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name DisallowShaking -Type DWord -Value 1
-
-
-# Change some performance settings
-# set overall settings to Custom (option 3 out of Auto, Best Appearance, Best Performance, Custom)
-Set-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects -Name VisualFXSetting -Type DWord -Value 3 # default 0
-# disable maximize / minimize animations
-Set-ItemProperty -Path "HKCU:\Control Panel\Desktop\WindowMetrics" -Name MinAnimate -Type String -Value 0 # default 1
-
