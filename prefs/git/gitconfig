@@ -96,3 +96,6 @@
 [pull]
 	# avoid creating pull merges, fast-forward only when pulling
 	ff = only
+[fetch]
+	# always prune remote branches that no longer exist
+	prune = true
