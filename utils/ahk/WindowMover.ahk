@@ -1,4 +1,6 @@
-; Util for easily moving and resizing windows by holding the Win key
+; Utils for moving and resizing windows by holding the Win key
+; Author: Bohdon Sayre
+; https://github.com/bohdon/workspace
 
 ; Hotkeys
 ;   Win-LMB: Move the mouse-active window. Drag anywhere in the window.
@@ -7,29 +9,39 @@
 ;   Win-Alt-RMB: Minimize the mouse-active window
 ;   Win-Ctrl-RMB: Close the mouse-active window
 
+; See the Options section below, as well as the WindowsMover.ini file for additional settings.
 
 
 ; Enable warnings to assist with detecting common errors.
 #Warn
-; Prevent multiple instances of this script from running
+; Prevent multiple instances of the script from running
 #SingleInstance force
-; Recommended for new scripts due to its superior speed and reliability.
+; https://www.autohotkey.com/docs/v1/lib/SendMode.htm
 SendMode("Input")
 ; Ensures a consistent starting directory.
 SetWorkingDir(A_ScriptDir)
 ; Set filename that holds options
-optsFile := "WindowMover.ini"
+OptionsFile := "WindowMover.ini"
 
 
-; Setup Options File
-; ------------------
-SnapDistance := IniRead(optsFile, "Options", "SnapDistance", 100)
-IniWrite(SnapDistance, optsFile, "Options", "SnapDistance")
+; Options
+; -------
 
-WinDelay := IniRead(optsFile, "Options", "WinDelay", 10)
-IniWrite(WinDelay, optsFile, "Options", "WinDelay")
+; the threshold in pixels for snapping to screen edges when resizing while holding shift
+SnapDistance := IniRead(OptionsFile, "Options", "SnapDistance", 100)
+IniWrite(SnapDistance, OptionsFile, "Options", "SnapDistance")
+
+; win delay effectively determines how quickly to refresh when dragging windows, etc.
+; 0ms ensures that window dragging is smooth even on high refresh rate monitors.
+WinDelay := IniRead(OptionsFile, "Options", "WinDelay", 0)
+IniWrite(WinDelay, OptionsFile, "Options", "WinDelay")
 
 SetWinDelay(WinDelay)
+
+; whether to activate windows when resizing them, off by default
+ActivateOnResize := IniRead(OptionsFile, "Options", "ActivateOnResize", false)
+IniWrite(ActivateOnResize, OptionsFile, "Options", "ActivateOnResize")
+
 
 ; End of Initial Setup
 return
@@ -39,6 +51,25 @@ return
 
 ; Globally Used Functions
 ; -----------------------
+CanModifyWin(WinId)
+{
+    ; return true if a window is allowed to be moved/minimized/maximized, false otherwise.
+    ; handles special windows like the desktop and task switcher to prevent accidental input.
+
+    WinClass := WinGetClass("ahk_id " WinId)
+
+    OutputDebug(WinClass)
+
+    if (WinClass ~= "^(?i:Progman)$" or
+        WinClass ~= "^(?i:WorkerW)$" or
+        WinClass ~= "^(?i:XamlExplorerHostIslandWindow)$")
+    {
+        return false
+    }
+
+    return true
+}
+
 Min(A, B)
 {
     return A <= B ? A : B
@@ -49,23 +80,23 @@ Max(A, B)
     return A >= B ? A : B
 }
 
-GetCurrentScreenBorders(&ScreenLeft, &ScreenRight, &ScreenTop, &ScreenBottom)
+GetCurrentScreenBorders(&ScreenLeft, &ScreenRight, &ScreenTop, &ScreenBot)
 {
     ; get current screen boarders for snapping, do this within the loop to allow snapping an all monitors without releasing button
-    MouseGetPos(&Mouse_X, &Mouse_Y)
+    MouseGetPos(&MouseX, &MouseY)
 
     MonitorCount := MonitorGetCount()
     Loop (MonitorCount)
     {
-        MonitorGetWorkArea(A_Index, &MonitorWorkAreaLeft, &MonitorWorkAreaTop, &MonitorWorkAreaRight, &MonitorWorkAreaBottom)
-        if (Mouse_X >= MonitorWorkAreaLeft) and (Mouse_X <= MonitorWorkAreaRight) and
-            (Mouse_Y >= MonitorWorkAreaTop) and (Mouse_Y <= MonitorWorkAreaBottom)
+        MonitorGetWorkArea(A_Index, &MonitorWorkAreaLeft, &MonitorWorkAreaTop, &MonitorWorkAreaRight, &MonitorWorkAreaBot)
+        if (MouseX >= MonitorWorkAreaLeft) and (MouseX <= MonitorWorkAreaRight) and
+            (MouseY >= MonitorWorkAreaTop) and (MouseY <= MonitorWorkAreaBot)
         {
             ScreenLeft := MonitorWorkAreaLeft
             ScreenRight := MonitorWorkAreaRight
             ScreenTop := MonitorWorkAreaTop
-            ScreenBottom := MonitorWorkAreaBottom
-            return
+            ScreenBot := MonitorWorkAreaBot
+            break
         }
     }
 }
@@ -80,22 +111,32 @@ GetShouldSnap()
 ; ---------------
 #MButton Up::
 {
-    return
 }
 
 #MButton::
 {
-    MouseGetPos(, , &mxw_id)
-    if !WinActive("ahk_id " mxw_id)
+    MouseGetPos(, , &WinId)
+
+    if (!CanModifyWin(WinId))
     {
-        WinActivate("ahk_id " mxw_id)
+        return
     }
-    mxw_isMax := WinGetMinMax("ahk_id " mxw_id)
-    if mxw_isMax
-        WinRestore("ahk_id " mxw_id)
+
+    ; activate the window if not already
+    if (!WinActive("ahk_id " WinId))
+    {
+        WinActivate("ahk_id " WinId)
+    }
+
+    ; toggle maximized/restored
+    if (WinGetMinMax("ahk_id " WinId))
+    {
+        WinRestore("ahk_id " WinId)
+    }
     else
-        WinMaximize("ahk_id " mxw_id)
-    return
+    {
+        WinMaximize("ahk_id " WinId)
+    }
 }
 
 
@@ -103,17 +144,18 @@ GetShouldSnap()
 ; ---------------
 #!RButton Up::
 {
-    return
 }
 
 #!RButton::
 {
-    MouseGetPos(, , &mnw_id)
-    mnw_class := WinGetClass("ahk_id " mnw_id)
-    ; don't run this on Desktop
-    if !(mnw_class ~= "^(?i:Progman)$")
-        WinMinimize("ahk_id " mnw_id)
-    return
+    MouseGetPos(, , &WinId)
+
+    if (!CanModifyWin(WinId))
+    {
+        return
+    }
+
+    WinMinimize("ahk_id " WinId)
 }
 
 
@@ -122,17 +164,18 @@ GetShouldSnap()
 ; ------------
 #^RButton Up::
 {
-    return
 }
 
 #^RButton::
 {
-    MouseGetPos(, , &clw_id)
-    clw_class := WinGetClass("ahk_id " clw_id)
-    ; don't run this on Desktop
-    if !(clw_class ~= "^(?i:Progman)$")
-        WinClose("ahk_id " clw_id)
-    return
+    MouseGetPos(, , &WinId)
+
+    if (!CanModifyWin(WinId))
+    {
+        return
+    }
+
+    WinClose("ahk_id " WinId)
 }
 
 
@@ -142,73 +185,66 @@ GetShouldSnap()
 #LButton Up::
 #+LButton Up::
 {
-    return
 }
 
 #LButton::
 #+LButton::
 {
     CoordMode("Mouse", "Screen")
-    if (WinActive("ahk_class TaskSwitcherWnd"))
+
+    MouseGetPos(&StartX, &StartY, &WinId)
+
+    if (!CanModifyWin(WinId))
     {
-        Send("{Blind}{LButton}")
         return
     }
 
-    MouseGetPos(&mvw_stX, &mvw_stY, &mvw_id)
-
-    if (!WinActive("ahk_id " mvw_id))
+    if (!WinActive("ahk_id " WinId))
     {
-        WinActivate("ahk_id " mvw_id)
+        WinActivate("ahk_id " WinId)
     }
-
-    mvw_class := WinGetClass("ahk_id " mvw_id)
-    ; don't run this on Desktop
-    if (mvw_class ~= "^(?i:Progman)$")
-        return
 
     ; restore the window if it's maximized
-    if (WinGetMinMax("ahk_id " mvw_id))
+    if (WinGetMinMax("ahk_id " WinId))
     {
-        WinRestore("ahk_id " mvw_id)
+        WinRestore("ahk_id " WinId)
         ; move start position so that window dragging is centered
-        WinGetPos(&mvw_stX, &mvw_stY, &mvw_sizeW, &mvw_sizeH, "ahk_id " mvw_id)
-        mvw_stX := mvw_stX + mvw_sizeW * 0.5
-        mvw_stY := mvw_stY + mvw_sizeH * 0.5
+        WinGetPos(&StartX, &StartY, &WinWidth, &WinHeight, "ahk_id " WinId)
+        StartX := StartX + WinWidth * 0.5
+        StartY := StartY + WinHeight * 0.5
     }
 
 
-    WinGetPos(&mvw_origWinX, &mvw_origWinY, &mvw_sizeW, &mvw_sizeH, "ahk_id " mvw_id)
+    WinGetPos(&WinPosX, &WinPosY, &WinWidth, &WinHeight, "ahk_id " WinId)
     while (GetKeyState("LButton", "P"))
     {
-        MouseGetPos(&mvw_curX, &mvw_curY)
-        mvw_deltaX := mvw_curX - mvw_stX
-        mvw_deltaY := mvw_curY - mvw_stY
-        mvw_targetX := (mvw_origWinX + mvw_deltaX)
-        mvw_targetY := (mvw_origWinY + mvw_deltaY)
+        MouseGetPos(&MouseX, &MouseY)
+        DeltaX := MouseX - StartX
+        DeltaY := MouseY - StartY
+        NewPosX := (WinPosX + DeltaX)
+        NewPosY := (WinPosY + DeltaY)
 
-        GetCurrentScreenBorders(&scrnLeft, &scrnRight, &scrnTop, &scrnBot)
+        GetCurrentScreenBorders(&ScreenLeft, &ScreenRight, &ScreenTop, &ScreenBot)
         if (GetShouldSnap())
         {
             ; keep track of actual distance so we can compare
             ; top to bottom or left to right if they are both
             ; within snap tolerance to determine which is better
-            mvw_leftDist := mvw_targetX - scrnLeft
-            mvw_topDist := mvw_targetY - scrnTop
-            mvw_rightDist := scrnRight - (mvw_targetX + mvw_sizeW)
-            mvw_botDist := scrnBot - (mvw_targetY + mvw_sizeH)
-            if (mvw_leftDist < SnapDistance)
-                mvw_targetX := scrnLeft
-            if (mvw_topDist < SnapDistance)
-                mvw_targetY := scrnTop
-            if (mvw_rightDist < SnapDistance and Abs(mvw_rightDist) < Abs(mvw_leftDist))
-                mvw_targetX := scrnRight - mvw_sizeW
-            if (mvw_botDist < SnapDistance and Abs(mvw_botDist) < Abs(mvw_topDist))
-                mvw_targetY := scrnBot - mvw_sizeH
+            DistToLeft := NewPosX - ScreenLeft
+            DistToTop := NewPosY - ScreenTop
+            DistToRight := ScreenRight - (NewPosX + WinWidth)
+            DistToBot := ScreenBot - (NewPosY + WinHeight)
+            if (DistToLeft < SnapDistance)
+                NewPosX := ScreenLeft
+            if (DistToTop < SnapDistance)
+                NewPosY := ScreenTop
+            if (DistToRight < SnapDistance and Abs(DistToRight) < Abs(DistToLeft))
+                NewPosX := ScreenRight - WinWidth
+            if (DistToBot < SnapDistance and Abs(DistToBot) < Abs(DistToTop))
+                NewPosY := ScreenBot - WinHeight
         }
-        WinMove(mvw_targetX, mvw_targetY, mvw_sizeW, mvw_sizeH, "ahk_id " mvw_id)
+        WinMove(NewPosX, NewPosY, WinWidth, WinHeight, "ahk_id " WinId)
     }
-    return
 }
 
 
@@ -220,77 +256,89 @@ GetShouldSnap()
 #RButton Up::
 #+RButton Up::
 {
-    return
 }
+
 #RButton::
 #+RButton::
 {
     CoordMode("Mouse", "Screen")
-    MouseGetPos(&rsw_stX, &rsw_stY, &rsw_id)
 
-    rsw_class := WinGetClass("ahk_id " rsw_id)
-    ; don't run this on Desktop
-    if (rsw_class ~= "^(?i:Progman)$")
-        return
+    MouseGetPos(&StartX, &StartY, &WinId)
 
-    ; restore the window if it's maximized
-    if (WinGetMinMax("ahk_id " rsw_id))
+    if (!CanModifyWin(WinId))
     {
-        GetCurrentScreenBorders(&CurrentScreenLeft, &CurrentScreenRight, &CurrentScreenTop, &CurrentScreenBottom)
-        WinRestore("ahk_id " rsw_id)
-        WinMove(CurrentScreenLeft, CurrentScreenTop, CurrentScreenRight - CurrentScreenLeft, CurrentScreenBottom - CurrentScreenTop, "ahk_id " rsw_id)
+        return
     }
 
-    WinGetPos(&rsw_stWinX, &rsw_stWinY, &rsw_stWinW, &rsw_stWinH, "ahk_id " rsw_id)
+    if (ActivateOnResize and !WinActive("ahk_id " WinId))
+    {
+        WinActivate("ahk_id " WinId)
+    }
 
-    ; Get the mouse quadrant within the window
-    if (rsw_stX < rsw_stWinX + rsw_stWinW / 2)
-    rsw_LeftFactor := 1
+    ; restore the window if it's maximized
+    if (WinGetMinMax("ahk_id " WinId))
+    {
+        GetCurrentScreenBorders(&ScreenLeft, &ScreenRight, &ScreenTop, &ScreenBot)
+        WinRestore("ahk_id " WinId)
+        WinMove(ScreenLeft, ScreenTop, ScreenRight - ScreenLeft, ScreenBot - ScreenTop, "ahk_id " WinId)
+    }
+
+    WinGetPos(&WinPosX, &WinPosY, &WinWidth, &WinHeight, "ahk_id " WinId)
+
+    ; determine which quadrant the mouse is in, which affects which corner to resize
+    if (StartX < WinPosX + WinWidth / 2)
+    {
+        LeftFactor := 1
+    }
     else
-    rsw_LeftFactor := -1
-    if (rsw_stY < rsw_stWinY + rsw_stWinH / 2)
-    rsw_TopFactor := 1
+    {
+        LeftFactor := -1
+    }
+    if (StartY < WinPosY + WinHeight / 2)
+    {
+        TopFactor := 1
+    }
     else
-    rsw_TopFactor := -1
+    {
+        TopFactor := -1
+    }
 
     while (GetKeyState("RButton", "P"))
     {
-        MouseGetPos(&rsw_curX, &rsw_curY)
-        rsw_deltaX := rsw_curX - rsw_stX
-        rsw_deltaY := rsw_curY - rsw_stY
+        MouseGetPos(&MouseX, &MouseY)
+        DeltaX := MouseX - StartX
+        DeltaY := MouseY - StartY
 
-        GetCurrentScreenBorders(&CurrentScreenLeft, &CurrentScreenRight, &CurrentScreenTop, &CurrentScreenBottom)
+        GetCurrentScreenBorders(&ScreenLeft, &ScreenRight, &ScreenTop, &ScreenBot)
 
         if (GetShouldSnap())
         {
-            rsw_targetX := (rsw_stWinX + (rsw_LeftFactor+1)/2*rsw_deltaX)
-            rsw_targetY := (rsw_stWinY + (rsw_TopFactor+1)/2*rsw_deltaY)
-            rsw_targetW := (rsw_stWinW - rsw_LeftFactor  *rsw_deltaX)
-            rsw_targetH := (rsw_stWinH - rsw_TopFactor  *rsw_deltaY)
+            NewPosX := (WinPosX + (LeftFactor + 1) / 2 * DeltaX)
+            NewPosY := (WinPosY + (TopFactor + 1) / 2 * DeltaY)
+            NewWidth := (WinWidth - LeftFactor * DeltaX)
+            NewHeight := (WinHeight - TopFactor * DeltaY)
 
-            if ((rsw_LeftFactor > 0) and (rsw_targetX < CurrentScreenLeft + SnapDistance)) {
-                rsw_targetW := rsw_stWinW + rsw_stWinX - CurrentScreenLeft
-                rsw_targetX := CurrentScreenLeft
+            if ((LeftFactor > 0) and (NewPosX < ScreenLeft + SnapDistance)) {
+                NewWidth := WinWidth + WinPosX - ScreenLeft
+                NewPosX := ScreenLeft
             }
-            if ((rsw_TopFactor > 0) and (rsw_targetY < CurrentScreenTop + SnapDistance)) {
-                rsw_targetH := rsw_stWinH + rsw_stWinY - CurrentScreenTop
-                rsw_targetY := CurrentScreenTop
+            if ((TopFactor > 0) and (NewPosY < ScreenTop + SnapDistance)) {
+                NewHeight := WinHeight + WinPosY - ScreenTop
+                NewPosY := ScreenTop
             }
-            if ((rsw_LeftFactor < 0) and (rsw_targetX + rsw_targetW > CurrentScreenRight - SnapDistance))
-                rsw_targetW := - rsw_stWinX + CurrentScreenRight
-            if ((rsw_TopFactor < 0) and (rsw_targetY + rsw_targetH > CurrentScreenBottom - SnapDistance))
-                rsw_targetH := - rsw_stWinY + CurrentScreenBottom
+            if ((LeftFactor < 0) and (NewPosX + NewWidth > ScreenRight - SnapDistance))
+                NewWidth := - WinPosX + ScreenRight
+            if ((TopFactor < 0) and (NewPosY + NewHeight > ScreenBot - SnapDistance))
+                NewHeight := - WinPosY + ScreenBot
         }
         else
         {
-            rsw_targetX := (rsw_stWinX + (rsw_LeftFactor+1)/2*rsw_deltaX)
-            rsw_targetY := (rsw_stWinY + (rsw_TopFactor+1)/2*rsw_deltaY)
-            rsw_targetW := (rsw_stWinW - rsw_LeftFactor  *rsw_deltaX)
-            rsw_targetH := (rsw_stWinH - rsw_TopFactor  *rsw_deltaY)
+            NewPosX := (WinPosX + (LeftFactor + 1) / 2 * DeltaX)
+            NewPosY := (WinPosY + (TopFactor + 1) / 2 * DeltaY)
+            NewWidth := (WinWidth - LeftFactor * DeltaX)
+            NewHeight := (WinHeight - TopFactor * DeltaY)
         }
 
-        WinMove(rsw_targetX, rsw_targetY, rsw_targetW, rsw_targetH, "ahk_id " rsw_id)
+        WinMove(NewPosX, NewPosY, NewWidth, NewHeight, "ahk_id " WinId)
     }
-    return
 }
-
