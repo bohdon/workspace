@@ -45,6 +45,5 @@ if should_install "AutoHotkey utils"; then
     set -x
     link "`pwd`/utils/ahk/AlwaysOnTop.ahk" "$HOME/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/AlwaysOnTop.ahk"
     link "`pwd`/utils/ahk/WindowMover.ahk" "$HOME/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/WindowMover.ahk"
-    link "`pwd`/utils/ahk/DisableAltTap.ahk" "$HOME/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/DisableAltTap.ahk"
     { set +x; } 2> /dev/null
 fi
