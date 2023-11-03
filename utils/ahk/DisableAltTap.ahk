@@ -1,3 +1,4 @@
+#Requires AutoHotkey v2.0
 ; This disables the alt triggered menubar navigation
 ; that can get in the way if you press alt accidentally
 ; without triggering a real hotkey

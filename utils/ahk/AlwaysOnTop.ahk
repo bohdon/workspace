@@ -1,4 +1,5 @@
-﻿; Allows toggling the always-on-top state of the active window.
+﻿#Requires AutoHotkey v2.0
+; Allows toggling the always-on-top state of the active window.
 
 ; Hotkeys
 ;   Win + A - Enable always on top for the active window

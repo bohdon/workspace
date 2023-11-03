@@ -1,3 +1,4 @@
+#Requires AutoHotkey v2.0
 ; Utils for moving and resizing windows by holding the Win key
 ; Author: Bohdon Sayre
 ; https://github.com/bohdon/workspace
