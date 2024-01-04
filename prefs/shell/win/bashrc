@@ -29,6 +29,10 @@ alias gs='git status'
 alias d='docker'
 alias d-c='docker-compose'
 
+# perforce aliases
+alias r="p4 reconcile -m"
+alias rk="p4 revert -k"
+
 # Utilities
 alias open='start'                     # Universal open command
 alias rm="rm -v"                       # Make rm always verbose
@@ -56,7 +60,6 @@ alias lsold="ls -rtlh *(D.om[1,10])"   # display the oldest files
 alias lssmall="ls -Srl *(.oL[1,10])"   # display the smallest files
 alias grep='grep --color=tty -d skip'
 alias egrep='egrep --color=tty -d skip'
-alias r="p4 reconcile -m"
 
 alias notes='code ~/Documents/Notes.txt'
 
