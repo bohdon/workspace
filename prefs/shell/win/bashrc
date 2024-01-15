@@ -4,6 +4,7 @@
 
 # add user bin to PATH
 export PATH="$PATH:$HOME/bin"
+
 # go bin to PATH
 export PATH="$PATH:$HOME/go/bin"
 
@@ -14,6 +15,12 @@ add_workspace_bin() {
 }
 add_workspace_bin
 unset -f add_workspace_bin
+
+# add jetbrains launchers to PATH
+export PATH="$PATH:$HOME/AppData/Local/JetBrains/Toolbox/scripts"
+
+alias rider="rider.cmd"
+alias charm="pycharm.cmd"
 
 # cd aliases
 alias ..='cd ..'
