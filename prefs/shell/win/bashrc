@@ -32,6 +32,9 @@ alias .....='cd ../../../..'
 alias g='git'
 alias gs='git status'
 
+# pre-commit aliases
+alias pc='pre-commit'
+
 # docker aliases
 alias d='docker'
 alias d-c='docker-compose'
@@ -67,8 +70,6 @@ alias lsold="ls -rtlh *(D.om[1,10])"   # display the oldest files
 alias lssmall="ls -Srl *(.oL[1,10])"   # display the smallest files
 alias grep='grep --color=tty -d skip'
 alias egrep='egrep --color=tty -d skip'
-
-alias notes='code ~/Documents/Notes.txt'
 
 dejunk() {
      find . \( -name ".DS_Store*" -o -name "Thumbs.db" \) -exec rm '{}' ';'
