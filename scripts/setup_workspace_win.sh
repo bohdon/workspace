@@ -1,3 +1,6 @@
+#! /bin/bash
+
+echo "Installing Windows workspace"
 
 if should_install "All"; then
     INSTALL_ALL=true
@@ -31,8 +34,8 @@ fi
 # Git Config
 if should_install "Git Config"; then
     set -x
-    git config --global include.path "`pwd`/prefs/git/gitconfig"
-    { set +x; } 2> /dev/null
+    git config --global include.path "$(pwd)/prefs/git/gitconfig"
+    { set +x; } 2>/dev/null
 fi
 
 # ConEmu
@@ -43,7 +46,7 @@ fi
 # AutoHotkey utils
 if should_install "AutoHotkey utils"; then
     set -x
-    link "`pwd`/utils/ahk/AlwaysOnTop.ahk" "$HOME/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/AlwaysOnTop.ahk"
-    link "`pwd`/utils/ahk/WindowMover.ahk" "$HOME/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/WindowMover.ahk"
-    { set +x; } 2> /dev/null
+    link "$(pwd)/utils/ahk/AlwaysOnTop.ahk" "$HOME/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/AlwaysOnTop.ahk"
+    link "$(pwd)/utils/ahk/WindowMover.ahk" "$HOME/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/WindowMover.ahk"
+    { set +x; } 2>/dev/null
 fi

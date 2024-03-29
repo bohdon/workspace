@@ -2,22 +2,8 @@
 
 ## Installation
 
-Install python
-
 ```shell
-choco install python
-```
-
-Install core development packages
-
-```shell
-pip install black[d] pre-commit
-```
-
-Install PyCharm
-
-```shell
-choco install pycharm-community
+./setup.sh python
 ```
 
 ## pre-commit
@@ -74,3 +60,10 @@ pre-commit install
 ```
 http://help.autodesk.com/cloudhelp/2024/ENU/Maya-Tech-Docs/CommandsPython/{element.name}.html
 ```
+
+
+## Motion Builder Development
+
+### Code inspection for pyfbsdk
+
+- ...

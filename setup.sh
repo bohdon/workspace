@@ -2,49 +2,24 @@
 
 cd $(dirname $0)
 
-should_install() {
-	if [[ "$INSTALL_ALL" == true ]]; then
-		return 0
-	fi
+source scripts/common.sh
 
-	# echo -n "Install $1? (y/n) "
-	read -p "Install $1? (y/n) " -r -n 1 answer
-	echo
-	if [[ $answer =~ ^[Yy]$ ]]; then
-		return 0
-	else
-		return 1
-	fi
-}
+ALL_COMMANDS="workspace apps python node"
 
-# simple cross-platform symlink util
-link() {
-    # use mklink if on windows
-    if [[ -n "$WINDIR" ]]; then
-        # determine if the link is a directory
-        # also convert '/' to '\'
-        if [[ -d "$1" ]]; then
-            cmd <<< "mklink /D \"`cygpath -w \"$2\"`\" \"`cygpath -w \"$1\"`\"" > /dev/null
-			# " # syntax highlight fix
-        else
-            cmd <<< "mklink \"`cygpath -w \"$2\"`\" \"`cygpath -w \"$1\"`\"" > /dev/null
-			# " # syntax highlight fix
-        fi
+# run command by name
+if [[ "$1" ]]; then
+
+    os_script="scripts/setup_${1}_${os_name}.sh"
+    generic_script="scripts/setup_${1}.sh"
+
+    if [ -f $os_script ]; then
+        source "$os_script"
+    elif [ -f $generic_script ]; then
+        source "$generic_script"
     else
-        ln -sf "$1" "$2"
+        echo "No setup script for '${1}' on '${os_name}'"
     fi
-}
 
-
-if [ "$(uname)" == "Darwin" ]; then
-	echo "Installing Mac workspace"
-	. install_mac.sh
-
-elif [ "$(expr substr $(uname -s) 1 5)" == "MINGW" ]; then
-	echo "Installing Windows workspace"
-	. install_win.sh
-
-elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-	echo "Installing Linux workspace"
-	. install_linux.sh
+else
+    echo -e "usage: setup.sh [COMMAND]\n  $ALL_COMMANDS"
 fi

@@ -2,10 +2,8 @@
 
 ## Installation
 
-Install nodejs
-
 ```shell
-choco install nodejs
+./setup.sh node
 ```
 
 Install node packages for repo
