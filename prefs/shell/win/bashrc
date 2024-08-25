@@ -1,23 +1,26 @@
+#! /bin/bash
 # Bohdon Sayre BASHRC
 # designed for use with Git Bash
 # https://github.com/bohdon/workspace
 
-# add user bin to PATH
-export PATH="$PATH:$HOME/bin"
-
-# go bin to PATH
-export PATH="$PATH:$HOME/go/bin"
+# add a directory to PATH, if not already there
+add_path() {
+     if [[ ":$PATH:" != *":$1"* ]]; then
+          export PATH="${PATH}:$1"
+     fi
+}
 
 # add workspace bin to PATH
 add_workspace_bin() {
-     local workspace_dir=$(readlink -f $(dirname ${BASH_SOURCE[0]})/../../../)
-     export PATH="$PATH:$workspace_dir/bin"
+     local workspace_dir
+     workspace_dir=$(readlink -f "$(dirname "${BASH_SOURCE[0]}")/../../../")
+     add_path "${workspace_dir}/bin"
 }
 add_workspace_bin
 unset -f add_workspace_bin
 
-# add jetbrains launchers to PATH
-export PATH="$PATH:$HOME/AppData/Local/JetBrains/Toolbox/scripts"
+add_path "${HOME}/bin"
+add_path "${HOME}/go/bin"
 
 alias rider="rider.cmd"
 alias charm="pycharm.cmd"
@@ -28,9 +31,13 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 
+# make rm, cp, and mv always verbose
+alias rm="rm -v"
+alias cp="cp -v"
+alias mv="mv -v"
+
 # git aliases
 alias g='git'
-alias gs='git status'
 
 # pre-commit aliases
 alias pc='pre-commit'
@@ -44,44 +51,35 @@ alias r="p4 reconcile -m"
 alias rk="p4 revert -k"
 
 # Utilities
-alias open='start'                     # Universal open command
-alias rm="rm -v"                       # Make rm always verbose
-alias cp="cp -v"                       # Make cp always verbose
-alias mv="mv -v"                       # Make mv always verbose
-alias cpx="rsync -h --progress --update --recursive "
-alias vim='vim -p'
-alias vi='vim -p'
-alias svim="sudo vim -p"
+alias open='start' # Universal open command
 alias ls="ls -AFGh --color=auto --show-control-chars"
 alias ll="ls -l"
 alias bigdirs='du -h ./ | grep -v "^-1" | grep "^[0-9]\\+G"'
-alias top="top -o cpu"
 alias grep='grep --color=tty -d skip'
 alias egrep='egrep --color=tty -d skip'
 
 # find files, and `ls -l` them
 find_ls() {
      [[ $1 ]] && path="$1" || path="."
-     find "$path" ${@:2} -type f -exec ls -AFGhl --color=auto --show-control-chars {} +
+     find "$path" "${@:2}" -type f -exec "ls" -AFGhl --color=auto --show-control-chars {} +
 }
 
 ff() {
-     find_ls $@
+     find_ls "$@"
 }
 
 fx() {
-     find_ls $@ -perm -u=x
+     find_ls "$@" -perm -u=x
 }
 
 fw() {
-     find_ls $@ -perm -u=w
+     find_ls "$@" -perm -u=w
 }
 
 fr() {
-     find_ls $@ ! \( -perm -u=w \)
+     find_ls "$@" ! \( -perm -u=w \)
 }
 
 dejunk() {
-     find . \( -name ".DS_Store*" -o -name "Thumbs.db" \) -exec rm '{}' ';'
+     find . \( -name ".DS_Store*" -o -name "Thumbs.db" \) -exec "rm" '{}' ';'
 }
-
