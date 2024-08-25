@@ -57,6 +57,7 @@ alias ll="ls -l"
 alias bigdirs='du -h ./ | grep -v "^-1" | grep "^[0-9]\\+G"'
 alias grep='grep --color=tty -d skip'
 alias egrep='egrep --color=tty -d skip'
+alias notify="notify.sh"
 
 # find files, and `ls -l` them
 find_ls() {
