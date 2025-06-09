@@ -3,24 +3,18 @@
 # designed for use with Git Bash
 # https://github.com/bohdon/workspace
 
+workspace_dir=$(readlink -f "$(dirname "${BASH_SOURCE[0]}")/../../..")
+
 # add a directory to PATH, if not already there
 add_path() {
-     if [[ ":$PATH:" != *":$1"* ]]; then
-          export PATH="${PATH}:$1"
-     fi
+    if [[ ":$PATH:" != *":$1"* ]]; then
+        export PATH="${PATH}:$1"
+    fi
 }
 
-# add workspace bin to PATH
-add_workspace_bin() {
-     local workspace_dir
-     workspace_dir=$(readlink -f "$(dirname "${BASH_SOURCE[0]}")/../../../")
-     add_path "${workspace_dir}/bin"
-}
-add_workspace_bin
-unset -f add_workspace_bin
-
+# add bin folders to PATH
+add_path "${workspace_dir}/bin"
 add_path "${HOME}/bin"
-add_path "${HOME}/go/bin"
 
 alias rider="rider.cmd"
 alias charm="pycharm.cmd"
@@ -61,26 +55,45 @@ alias notify="notify.sh"
 
 # find files, and `ls -l` them
 find_ls() {
-     [[ $1 ]] && path="$1" || path="."
-     find "$path" "${@:2}" -type f -exec "ls" -AFGhl --color=auto --show-control-chars {} +
+    [[ $1 ]] && path="$1" || path="."
+    find "$path" "${@:2}" -type f -exec "ls" -AFGhl --color=auto --show-control-chars {} +
 }
 
 ff() {
-     find_ls "$@"
+    find_ls "$@"
 }
 
 fx() {
-     find_ls "$@" -perm -u=x
+    find_ls "$@" -perm -u=x
 }
 
 fw() {
-     find_ls "$@" -perm -u=w
+    find_ls "$@" -perm -u=w
 }
 
 fr() {
-     find_ls "$@" ! \( -perm -u=w \)
+    find_ls "$@" ! \( -perm -u=w \)
 }
 
 dejunk() {
-     find . \( -name ".DS_Store*" -o -name "Thumbs.db" \) -exec "rm" '{}' ';'
+    find . \( -name ".DS_Store*" -o -name "Thumbs.db" \) -exec "rm" '{}' ';'
+}
+
+
+# project switching utils
+setproj() {
+    if [[ -z $1 ]]; then
+        echo "Usage: setproj PROJECT"
+        return
+    fi
+
+    env_file=${workspace_dir}/.projects/"${1}".env
+    if [[ -f "$env_file" ]]; then
+        set -a
+        source $env_file
+        set +a
+        echo "Set project '${env_file}'"
+    else
+        echo "Project not found: '${env_file}'"
+    fi
 }
