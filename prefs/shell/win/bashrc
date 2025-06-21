@@ -97,4 +97,9 @@ setproj() {
     else
         echo "Project not found: '${env_file}'"
     fi
+
+    # update ConEmu tab name
+    if command -v ConEmuC >/dev/null 2>&1; then
+        ConEmuC -GuiMacro Rename 0 $1
+    fi
 }
