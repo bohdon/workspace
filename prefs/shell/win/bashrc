@@ -84,6 +84,7 @@ dejunk() {
 setproj() {
     if [[ -z $1 ]]; then
         echo "Usage: setproj PROJECT"
+        ls "${workspace_dir}/.projects" | sed -e 's/\..*$//'
         return
     fi
 
