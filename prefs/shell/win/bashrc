@@ -80,8 +80,9 @@ dejunk() {
 }
 
 
-# project switching utils
-setproj() {
+# Set Project
+# Source an env in workspace/.projects/ and cd to the SETPROJ_ROOT if set.
+sp() {
     if [[ -z $1 ]]; then
         echo "Usage: setproj PROJECT"
         ls "${workspace_dir}/.projects" | sed -e 's/\..*$//'
