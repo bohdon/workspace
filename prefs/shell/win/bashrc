@@ -91,6 +91,7 @@ setproj() {
     env_file=${workspace_dir}/.projects/"${1}".env
     if [[ -f "$env_file" ]]; then
         set -a
+        export SETPROJ_ROOT=
         source $env_file
         set +a
         echo "Set project '${env_file}'"
@@ -101,5 +102,10 @@ setproj() {
     # update ConEmu tab name
     if command -v ConEmuC >/dev/null 2>&1; then
         ConEmuC -GuiMacro Rename 0 $1
+    fi
+
+    # cd to default root
+    if [[ ! -z ${SETPROJ_ROOT} ]]; then
+        cd "${SETPROJ_ROOT}" || return
     fi
 }
