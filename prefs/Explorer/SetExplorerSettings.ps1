@@ -20,6 +20,9 @@ Set-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\
 reg add "HKCU\Software\Classes\CLSID\{86CA1AA0-34AA-4E8B-A509-50C905BAE2A2}\InprocServer32" /f /ve
 
 # Disable start menu online search
+if (-not (Test-Path "HKCU:\Software\Policies\Microsoft\Windows\Explorer")) {
+    New-Item -Path HKCU:\Software\Policies\Microsoft\Windows -Name Explorer -ItemType Directory > $null
+}
 Set-ItemProperty -Path HKCU:\Software\Policies\Microsoft\Windows\Explorer -Name DisableSearchBoxSuggestions -Type DWord -Value 1 # default 0 / non-existent
 
 # restart explorer
