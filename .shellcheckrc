@@ -1,0 +1,2 @@
+# allows \r\n on windows
+disable=SC1017
