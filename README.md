@@ -1,30 +1,19 @@
 # Workspace
 
-This project contains a variety of personal preferences for apps like Git, Sublime, Shell, Visual Studio, etc.
+Tools for setting up workspace preferences, installing common apps and development environments across platforms.
 
 
-## Setup
+## Setup Script
 
-To setup a workspace, simply run `setup.sh`.
+Run `setup.sh` to see the available commands.
 
-## Manual Setup
+- `setup.sh apps` install common apps
+- `setup.sh ws` install workspace prefs and keybindings
 
-### .zshrc
-```
-# source workspace zshrc
-. ~/dev/workspace/prefs/shell/mac/zshrc
-```
+## Features
 
-### .bash_profile
-```
-# source workspace bashrc
-test -f ~/dev/workspace/prefs/shell/win/bashrc && . ~/dev/workspace/prefs/shell/win/bashrc
-```
-
-### Explorer
-Right-click and Run With PowerShell the `.ps1` files
-
-
-### AutoHotkey utils
-Create a shortcut for each `.ahk` file in `<user>\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`
-
+- `bashrc` with several everyday aliases and helper functions
+- AutoHotkey scripts to move windows just like on linux
+- `gitconfig` aliases
+- VS Code prefs and keybindings for ijkl navigation
+- General system prefs and hotkeys

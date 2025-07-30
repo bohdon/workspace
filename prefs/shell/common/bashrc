@@ -1,0 +1,84 @@
+
+# add ~/bin and workspace/bin to PATH
+export PATH="$PATH:$HOME/bin:${workspace_dir}/bin"
+
+# cd aliases
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+
+# make rm, cp, and mv always verbose
+alias rm="rm -v"
+alias cp="cp -v"
+alias mv="mv -v"
+
+alias ls="ls -AFh --color=auto"
+alias ll="ls -AFhl"
+
+# apps and tools
+alias g='git'
+alias pc='pre-commit'
+alias d='docker'
+alias d-c='docker-compose'
+alias r="p4 reconcile -m"
+alias rk="p4 revert -k"
+alias notify="notify.sh"
+alias bigdirs='du -h ./ | grep -v "^-1" | grep "^[0-9]\\+G"'
+
+# find files, and `ls -l` them
+find_ls() {
+    [[ $1 ]] && path="$1" || path="."
+    find "$path" "${@:2}" -type f -exec "ls" -AFGhl --color=auto --show-control-chars {} +
+}
+
+ff() {
+    find_ls "$@"
+}
+
+fx() {
+    find_ls "$@" -perm -u=x
+}
+
+fw() {
+    find_ls "$@" -perm -u=w
+}
+
+fr() {
+    find_ls "$@" ! \( -perm -u=w \)
+}
+
+dejunk() {
+    find . \( -name ".DS_Store*" -o -name "Thumbs.db" \) -exec "rm" '{}' ';'
+}
+
+# Set Project
+# Source an env in workspace/.projects/ and cd to the SETPROJ_ROOT if set.
+sp() {
+    if [[ -z $1 ]]; then
+        echo "Usage: setproj PROJECT"
+        ls "${workspace_dir}/.projects" | sed -e 's/\..*$//'
+        return
+    fi
+
+    env_file=${workspace_dir}/.projects/"${1}".env
+    if [[ -f "$env_file" ]]; then
+        set -a
+        export SETPROJ_ROOT=
+        source $env_file
+        set +a
+        echo "Set project '${env_file}'"
+    else
+        echo "Project not found: '${env_file}'"
+    fi
+
+    # update PS1, cleanup previous project if set...
+    PS1=$(echo "$PS1" | sed s/\\\\033\\[35m\(.*\)\\\\033\\[00m\ //)
+    # ...then add new project
+    PS1="\033[35m(${1})\033[00m ${PS1}"
+
+    # cd to default root
+    if [[ ! -z ${SETPROJ_ROOT} ]]; then
+        cd "${SETPROJ_ROOT}" || return
+    fi
+}

@@ -1,12 +1,18 @@
 #! /bin/bash
 # shared utils for running setup scripts
 
-if [ "$OSTYPE" == "darwin"* ]; then
+if [[ "$OSTYPE" == "darwin"* ]]; then
     os_name="mac"
-elif [ "$OSTYPE" == "msys" ]; then
+    installer="brew"
+    bashrc_file="$HOME/.zshrc"
+elif [[ "$OSTYPE" == "msys" ]]; then
     os_name="win"
-elif [ "$OSTYPE" == "linux-gnu"* ]; then
+    installer="choco"
+    bashrc_file="$HOME/.bash_profile"
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
     os_name="linux"
+    installer="sudo apt-get"
+    bashrc_file="$HOME/.bashrc"
 else
     echo "Unrecognized OS: '${OSTYPE}'"
     exit 1
@@ -43,4 +49,27 @@ should_install() {
     else
         return 1
     fi
+}
+
+install_pkgs() {
+    if [[ $1 ]]; then
+        set -x
+        $installer install -y $@
+        { set +x; } 2>/dev/null
+    else
+        echo "No packages seleced to install"
+    fi
+}
+
+install_bashrc() {
+    comment="# source https://github.com/bohdon/workspace bashrc"
+    script="if [ -f $1 ]; then\n    . $1\nfi"
+
+    if [[ -f $bashrc_file ]] && $(grep -Eq "$comment" $bashrc_file); then
+        echo "${bashrc_file} unchanged"
+        return
+    fi
+
+    echo -e "\n$comment\n$script" >> "$bashrc_file"
+    echo "Updated $bashrc_file"
 }

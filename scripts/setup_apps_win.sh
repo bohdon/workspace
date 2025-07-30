@@ -36,10 +36,4 @@ if should_install "JetBrains Toolbox"; then
     pkgs="${pkgs} jetbrainstoolbox"
 fi
 
-if [[ $pkgs ]]; then
-    set -x
-    choco install $pkgs -y
-    { set +x; } 2>/dev/null
-else
-    echo "No packages seleced to install"
-fi
+install_pkgs $pkgs

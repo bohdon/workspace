@@ -69,7 +69,7 @@
 
 	# open a browser to the git url
 	br = !git config remote.origin.url | sed -E 's/\\.git//g' | sed -E '/^http/! s/\\:/\\//' | sed -E 's/git\\@/http\\:\\/\\//' | xargs -I {} open {}
-	brw = !git config remote.origin.url | sed -E 's/\\.git//g' | sed -E '/^http/! s/\\:/\\//' | sed -E 's/git\\@/http\\:\\/\\//' | xargs -I {} start {}
+	brw = !git config remote.origin.url | sed -E 's/\\.git//g' | sed -E '/^http/! s/\\:/\\//' | sed -E 's/git\\@/http\\:\\/\\//' | xargs -I {} open {}
 
 [apply]
 	whitespace = warn

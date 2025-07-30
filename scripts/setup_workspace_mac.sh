@@ -6,8 +6,13 @@ if should_install "All"; then
     INSTALL_ALL=true
 fi
 
-# Visual Studio Code
-if should_install "Visual Studio Code prefs"; then
+# zshrc
+if should_install "zshrc"; then
+    install_bashrc "~/workspace/prefs/shell/${os_name}/zshrc"
+fi
+
+# VS Code
+if should_install "VS Code prefs"; then
     cp -av "prefs/Code/mac/." "$HOME/Library/Application Support/Code/"
 fi
 

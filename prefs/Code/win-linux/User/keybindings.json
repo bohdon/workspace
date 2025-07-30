@@ -2,105 +2,105 @@
 [
     // move cursor with ijklh;
     {
-        "key": "ctrl+i",
+        "key": "alt+i",
         "command": "cursorUp",
         "when": "editorTextFocus"
     },
     {
-        "key": "ctrl+k",
+        "key": "alt+k",
         "command": "cursorDown",
         "when": "editorTextFocus"
     },
     {
-        "key": "ctrl+j",
+        "key": "alt+j",
         "command": "cursorLeft",
         "when": "editorTextFocus"
     },
     {
-        "key": "ctrl+l",
+        "key": "alt+l",
         "command": "cursorRight",
         "when": "editorTextFocus"
     },
     {
-        "key": "ctrl+h",
+        "key": "alt+h",
         "command": "cursorHome",
         "when": "editorTextFocus"
     },
     {
-        "key": "ctrl+;",
+        "key": "alt+;",
         "command": "cursorEnd",
         "when": "editorTextFocus"
     },
     // move and select
     {
-        "key": "ctrl+shift+i",
+        "key": "alt+shift+i",
         "command": "cursorUpSelect",
         "when": "editorTextFocus"
     },
     {
-        "key": "ctrl+shift+cmd+i",
+        "key": "alt+shift+ctrl+i",
         "command": "cursorUpSelect",
         "when": "editorTextFocus"
     },
     {
-        "key": "ctrl+shift+k",
+        "key": "alt+shift+k",
         "command": "cursorDownSelect",
         "when": "editorTextFocus"
     },
     {
-        "key": "ctrl+shift+cmd+k",
+        "key": "alt+shift+ctrl+k",
         "command": "cursorDownSelect",
         "when": "editorTextFocus"
     },
     {
-        "key": "ctrl+shift+j",
+        "key": "alt+shift+j",
         "command": "cursorLeftSelect",
         "when": "editorTextFocus"
     },
     {
-        "key": "ctrl+shift+l",
+        "key": "alt+shift+l",
         "command": "cursorRightSelect",
         "when": "editorTextFocus"
     },
     {
-        "key": "ctrl+shift+h",
+        "key": "alt+shift+h",
         "command": "cursorHomeSelect",
         "when": "editorTextFocus"
     },
     {
-        "key": "ctrl+shift+;",
+        "key": "alt+shift+;",
         "command": "cursorEndSelect",
         "when": "editorTextFocus"
     },
     // move by word
     {
-        "key": "ctrl+cmd+j",
+        "key": "alt+ctrl+j",
         "command": "cursorWordStartLeft",
         "when": "editorTextFocus"
     },
     {
-        "key": "ctrl+cmd+l",
+        "key": "alt+ctrl+l",
         "command": "cursorWordEndRight",
         "when": "editorTextFocus"
     },
     {
-        "key": "ctrl+cmd+shift+j",
+        "key": "alt+ctrl+shift+j",
         "command": "cursorWordStartLeftSelect",
         "when": "editorTextFocus"
     },
     {
-        "key": "ctrl+cmd+shift+l",
+        "key": "alt+ctrl+shift+l",
         "command": "cursorWordEndRightSelect",
         "when": "editorTextFocus"
     },
     // move line up / down
     {
-        "key": "ctrl+cmd+i",
+        "key": "alt+ctrl+i",
         "command": "editor.action.moveLinesUpAction",
         "when": "editorFocus && !editorReadonly"
     },
     {
-        "key": "ctrl+cmd+k",
+        "key": "alt+ctrl+k",
         "command": "editor.action.moveLinesDownAction",
         "when": "editorFocus && !editorReadonly"
     },
@@ -112,5 +112,32 @@
     {
         "key": "ctrl+shift+tab",
         "command": "workbench.action.previousEditor"
-    }
+    },
+    // consistent go-to-definition
+    {
+        "key": "alt+g",
+        "command": "editor.action.revealDefinition",
+        "when": "editorHasDefinitionProvider && editorTextFocus"
+    },
+    {
+        "key": "f12",
+        "command": "-editor.action.revealDefinition",
+        "when": "editorHasDefinitionProvider && editorTextFocus"
+    },
+    // sort lines
+    {
+        "key": "ctrl+shift+alt+o",
+        "command": "editor.action.sortLinesAscending"
+    },
+    // format document
+    {
+        "key": "ctrl+alt+enter",
+        "command": "editor.action.formatDocument",
+        "when": "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly && !inCompositeEditor"
+    },
+    {
+        "key": "ctrl+alt+enter",
+        "command": "editor.action.formatDocument.none",
+        "when": "editorTextFocus && !editorHasDocumentFormattingProvider && !editorReadonly"
+    },
 ]

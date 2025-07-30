@@ -6,6 +6,11 @@ if should_install "All"; then
     INSTALL_ALL=true
 fi
 
+# bashrc
+if should_install "bashrc"; then
+    install_bashrc "~/workspace/prefs/shell/${os_name}/bashrc"
+fi
+
 # Explorer Settings
 if should_install "Explorer prefs"; then
     powershell -ExecutionPolicy Bypass -File "prefs/Explorer/SetExplorerSettings.ps1"
@@ -26,9 +31,9 @@ if should_install "Caps Lock as Control"; then
     regedit.exe "prefs/Windows/CapsLockMappedToControl.reg"
 fi
 
-# Visual Studio Code
-if should_install "Visual Studio Code prefs"; then
-    cp -av "prefs/Code/win/." "$HOME/AppData/Roaming/Code/"
+# VS Code
+if should_install "VS Code prefs"; then
+    cp -av "prefs/Code/win-linux/." "$HOME/AppData/Roaming/Code/"
 fi
 
 # Git Config

@@ -1,6 +1,5 @@
 {
     "editor.lineHeight": 22,
-    "editor.multiCursorModifier": "ctrlCmd",
     "editor.snippetSuggestions": "top",
     "editor.formatOnPaste": true,
     "editor.renderWhitespace": "boundary",
