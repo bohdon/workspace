@@ -1,6 +1,8 @@
 #! /bin/bash
 # shared utils for running setup scripts
 
+workspace_dir=$(readlink -f "$(dirname "${BASH_SOURCE[0]}")/..")
+
 if [[ "$OSTYPE" == "darwin"* ]]; then
     os_name="mac"
     installer="brew"
@@ -65,7 +67,7 @@ install_bashrc() {
     comment="# source https://github.com/bohdon/workspace bashrc"
     script="if [ -f $1 ]; then\n    . $1\nfi"
 
-    if [[ -f $bashrc_file ]] && $(grep -Eq "$comment" $bashrc_file); then
+    if [[ -f $bashrc_file ]] && $(grep -Eq "$1" $bashrc_file); then
         echo "${bashrc_file} unchanged"
         return
     fi

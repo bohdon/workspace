@@ -8,7 +8,7 @@ fi
 
 # zshrc
 if should_install "zshrc"; then
-    install_bashrc "~/workspace/prefs/shell/${os_name}/zshrc"
+    install_bashrc "${workspace_dir}/prefs/shell/${os_name}/zshrc"
 fi
 
 # VS Code
@@ -19,6 +19,6 @@ fi
 # Git Config
 if should_install "Git Config"; then
     set -x
-    git config --global include.path "$(pwd)/prefs/git/gitconfig"
+    git config --global include.path "${workspace_dir}/prefs/git/gitconfig"
     { set +x; } 2>/dev/null
 fi
