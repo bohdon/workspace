@@ -29,7 +29,7 @@ alias bigdirs='du -h ./ | grep -v "^-1" | grep "^[0-9]\\+G"'
 # find files, and `ls -l` them
 find_ls() {
     [[ $1 ]] && path="$1" || path="."
-    find "$path" "${@:2}" -type f -exec "ls" -AFGhl --color=auto --show-control-chars {} +
+    find "$path" "${@:2}" -type f -exec "ls" -AFhl --color=auto --show-control-chars {} +
 }
 
 ff() {
