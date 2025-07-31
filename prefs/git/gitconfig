@@ -99,3 +99,5 @@
 [fetch]
 	# always prune remote branches that no longer exist
 	prune = true
+[init]
+	defaultBranch = main
