@@ -77,6 +77,11 @@ sp() {
     # ...then add new project
     PS1="\033[35m(${1})\033[00m ${PS1}"
 
+    # update ConEmu tab name if avail
+    if command -v ConEmuC >/dev/null 2>&1; then
+        ConEmuC -GuiMacro Rename 0 $1
+    fi
+
     # cd to default root
     if [[ ! -z ${SETPROJ_ROOT} ]]; then
         cd "${SETPROJ_ROOT}" || return
