@@ -64,6 +64,9 @@ sp() {
     env_file=${workspace_dir}/.projects/"${1}".env
     if [[ -f "$env_file" ]]; then
         set -a
+        # set project name for prompt, can be overridden by env
+        export PROJ="$1"
+        # clear proj root for cd in case the env doesn't override it
         export SETPROJ_ROOT=
         source $env_file
         set +a
@@ -72,15 +75,8 @@ sp() {
         echo "Project not found: '${env_file}'"
     fi
 
-    # update PS1, cleanup previous project if set...
-    PS1=$(echo "$PS1" | sed s/\\\\033\\[35m\(.*\)\\\\033\\[00m\ //)
-    # ...then add new project
-    PS1="\033[35m(${1})\033[00m ${PS1}"
-
-    # update ConEmu tab name if avail
-    if command -v ConEmuC >/dev/null 2>&1; then
-        ConEmuC -GuiMacro Rename 0 $1
-    fi
+    # include project name in prompt
+    PS1='\[\033]0;${PROJ:+($PROJ) }\W\007\]${PROJ:+\033[35m($PROJ)\033[00m }\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
     # cd to default root
     if [[ ! -z ${SETPROJ_ROOT} ]]; then
