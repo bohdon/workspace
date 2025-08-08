@@ -8,9 +8,30 @@ workspace_dir=$(readlink -f "$(dirname "${BASH_SOURCE[0]}")/../../..")
 # source common bashrc
 . $workspace_dir/prefs/shell/common/bashrc
 
+# set prompt to mimic linux, and be on one line
+PS1='\[\033]0;\W\007\]\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+
 alias open='start' # universal open command
 alias rider="rider.cmd"
 alias charm="pycharm.cmd"
 
-# set prompt to mimic linux, and be on one line
-PS1='\[\033]0;\W\007\]\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+# aliases for Unreal Engine projects
+# requires UE_ROOT, UE_PROJ_ROOT, and UE_PROJ_NAME to be set in project env
+
+alias cdu='cd ${UE_ROOT}'
+alias cdp='cd ${UE_PROJ_ROOT}'
+alias ue='start ${UE_ROOT}/Engine/Binaries/Win64/UnrealEditor.exe ${UE_PROJ_NAME} -skipcompile'
+alias ue-cmd='${UE_ROOT}/Engine/Binaries/Win64/UnrealEditor-Cmd.exe'
+alias ue-game='start ${UE_ROOT}/Engine/Binaries/Win64/UnrealEditor.exe ${UE_PROJ_NAME} -skipcompile -game'
+alias ue-ide='rider ${UE_ROOT}/UE5.sln'
+alias ubt='"${UE_ROOT}/RunUBT.bat"'
+alias uat='"${UE_ROOT}/RunUAT.bat"'
+alias ushell='"${UE_ROOT}/Engine/Extras/ushell/ushell.bat"'
+alias insights='start ${UE_ROOT}/Engine/Binaries/Win64/UnrealInsights.exe'
+alias uba='${UE_ROOT}/Engine/Binaries/Win64/UnrealBuildAccelerator/x64/UbaVisualizer.exe'
+alias ue-appdata='code "${HOME}/AppData/Roaming/UnrealBuildTool/" "${HOME}/AppData/Local/Unreal Engine/" "${HOME}/AppData/Local/UnrealBuildTool/" "${HOME}/AppData/Local/UnrealGameSync/" "${HOME}/AppData/Local/UnrealBlah/"'
+alias ue-logs='code "${UE_PROJ_ROOT}/Saved/Logs" "${UE_ROOT}/Engine/Programs/AutomationTool/Saved/Logs" "${UE_ROOT}/Engine/Programs/UnrealBuildTool"'
+
+ue-cook() {
+    ue-cmd "${UE_PROJ_NAME}" -run=Cook -TargetPlatform=Windows -cookincremental "$@"
+}
