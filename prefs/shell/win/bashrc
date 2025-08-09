@@ -3,6 +3,8 @@
 # designed for use with Git Bash
 # https://github.com/bohdon/workspace
 
+# shellcheck disable=SC2215
+
 workspace_dir=$(readlink -f "$(dirname "${BASH_SOURCE[0]}")/../../..")
 
 # source common bashrc
@@ -20,18 +22,137 @@ alias charm="pycharm.cmd"
 
 alias cdu='cd ${UE_ROOT}'
 alias cdp='cd ${UE_PROJ_ROOT}'
-alias ue='start ${UE_ROOT}/Engine/Binaries/Win64/UnrealEditor.exe ${UE_PROJ_NAME} -skipcompile'
-alias ue-cmd='${UE_ROOT}/Engine/Binaries/Win64/UnrealEditor-Cmd.exe'
-alias ue-game='start ${UE_ROOT}/Engine/Binaries/Win64/UnrealEditor.exe ${UE_PROJ_NAME} -skipcompile -game'
+alias ue='start "${UE_ROOT}/Engine/Binaries/Win64/UnrealEditor.exe" ${UE_PROJ_NAME} -skipcompile'
+alias ue-game='start "${UE_ROOT}/Engine/Binaries/Win64/UnrealEditor.exe" ${UE_PROJ_NAME} -skipcompile -game'
 alias ue-ide='rider ${UE_SLN:-${UE_ROOT}/UE5.sln}'
-alias ubt='"${UE_ROOT}/RunUBT.bat"'
-alias uat='"${UE_ROOT}/RunUAT.bat"'
+alias ubt='"${UE_ROOT}/Engine/Build/BatchFiles/RunUBT.bat"'
+alias uat='"${UE_ROOT}/Engine/Build/BatchFiles/RunUAT.bat"'
 alias ushell='"${UE_ROOT}/Engine/Extras/ushell/ushell.bat"'
 alias insights='start ${UE_ROOT}/Engine/Binaries/Win64/UnrealInsights.exe'
 alias uba='${UE_ROOT}/Engine/Binaries/Win64/UnrealBuildAccelerator/x64/UbaVisualizer.exe'
 alias ue-appdata='code "${HOME}/AppData/Roaming/Unreal Engine/" "${HOME}/AppData/Local/Unreal Engine/" "${HOME}/AppData/Local/UnrealBuildTool/" "${HOME}/AppData/Local/UnrealGameSync/"'
 alias ue-logs='code "${UE_PROJ_ROOT}/Saved/Logs" "${UE_ROOT}/Engine/Programs/AutomationTool/Saved/Logs" "${UE_ROOT}/Engine/Programs/UnrealBuildTool"'
 
+ue-cmd() {
+    "${UE_ROOT}/Engine/Binaries/Win64/UnrealEditor-Cmd.exe" "${UE_PROJ_NAME}" -stdout -FullStdOutLogOutput "$@"
+}
+
+# Run BuildAndTestProject.xml for Development Editor, Development, Test, and Shipping configs
+# Use any combination of `dtse` args (dev, test, shipping editor), e.g. `ue-build de` for dev + editor only
+# Run with -ListOnly to view other targets
+ue-build() {
+    # default to game target only
+    target="${UE_PROJ_NAME} Compile Editor Win64;${UE_PROJ_NAME} Compile Win64"
+    configs="Development"
+    args=""
+
+    if [[ -n "$*" ]]; then
+        target=""
+        configs=""
+
+        if [[ ${1,,} = "-listonly" ]]; then
+            # dont configure target or configs when running -ListOnly
+            args="-ListOnly"
+        else
+            # parse 'dts' for configs, and game target
+            configs=$(_ue-get-configs "$1")
+            if [[ $configs ]]; then
+                target="${UE_PROJ_NAME} Compile Win64"
+            fi
+            # parse 'e' for editor target
+            if [[ $* == *e* ]]; then
+                target="${UE_PROJ_NAME} Compile Editor Win64;$target"
+            fi
+            shift
+        fi
+    fi
+
+    uat BuildGraph \
+        -Script="Engine/Build/Graph/Tasks/BuildAndTestProject.xml" \
+        -set:ProjectName="${UE_PROJ_NAME}" \
+        -set:ProjectPath="${UE_PROJ_ROOT}" \
+        -set:TargetPlatforms=Win64 \
+        -set:TargetConfigurations="${configs}" \
+        -Target="${target}" \
+        ${args} | _ue-color
+}
+
+# Run a Windows incremental cook
 ue-cook() {
-    ue-cmd "${UE_PROJ_NAME}" -run=Cook -TargetPlatform=Windows -cookincremental "$@"
+    # cook and color-code the output
+    uat BuildCookRun \
+        -project="${UE_PROJ_ROOT}/${UE_PROJ_NAME}.uproject" \
+        -cook -cookincremental -zenstore \
+        "$@" | _ue-color "LogCook"
+}
+
+# Run BuildAndTestProject.xml to build, cook, and stage for Windows
+ue-package() {
+    platform="Win64"
+    configs=$(_ue-get-configs "$1")
+    configs=${configs:-Development}
+    shift
+    uat BuildGraph \
+        -Script="Engine/Build/Graph/Tasks/BuildAndTestProject.xml" \
+        -set:ProjectName="${UE_PROJ_NAME}" \
+        -set:ProjectPath="${UE_PROJ_ROOT}" \
+        -set:TargetPlatforms="${platform}" \
+        -set:PackageConfigurations="${configs}" \
+        -Target="${UE_PROJ_NAME} Stage ${platform}" \
+        "$@" | _ue-color "LogCook" "(config file|LogIoStore|LogZen)"
+}
+
+# Parse for d, t, or s and return `Development+Test+Shipping`
+_ue-get-configs() {
+    configs=""
+    if [[ $1 == *d* ]]; then
+        configs="Development"
+    fi
+    if [[ $1 == *t* ]]; then
+        configs="$configs+Test"
+    fi
+    if [[ $1 == *s* ]]; then
+        configs="$configs+Shipping"
+    fi
+    echo $configs
+}
+
+_ue-color() {
+    awk -v p1="${1:-^$}" -v p2="${2:-^$}" '
+        function hash(str) {
+            h = 0
+            for (i = 1; i <= length(str); i++) {
+                h += index("ABCDEFGHIJKLMNOPQRSTUVWXYZ", substr(str, i, 1)) + 64
+            }
+            return h
+        }
+
+        # print a line, coloring a substring from start to end,
+        # randomly based on a hash for the substring
+        function print_colored(fullstr, start, end) {
+            str = substr(fullstr, start, end)
+            h = hash(str)
+
+            # colors in mid range only (120..200)
+            r = (h * 12) % 80 + 120
+            g = (h * 34) % 80 + 120
+            b = (h * 56) % 80 + 120
+
+            printf "%s", substr(fullstr, 1, start - 1)
+            printf "\033[38;2;%d;%d;%dm%s\033[0m", r, g, b, str
+            print substr(fullstr, start + end)
+        }
+
+        /(Error:|FAIL)/ {print "\033[31m" $0 "\033[0m"; next}
+        /Warning:/ {print "\033[33m" $0 "\033[0m"; next}
+        /\*\*\*/ {print "\033[97m" $0 "\033[0m"; next}
+        $0 ~ p1 {print "\033[96m" $0 "\033[0m"; next}
+        $0 ~ p2 {print "\033[90m" $0 "\033[0m"; next}
+        /(Verbose:|Writing manifest|Reading tag|Creating makefile)/ {print "\033[90m" $0 "\033[0m"; next}
+        /(SUCCESS|up to date)/ {print "\033[32m" $0 "\033[0m"; next}
+        /(Running|Executing Class)/ {print "\033[95m" $0 "\033[0m"; next}
+        /Building.*action.*started/ {print "\033[96m" $0 "\033[0m"; next}
+        /\[[0-9]+\/[0-9]+\]/ {print "\033[96m" $0 "\033[0m"; next}
+        {if (match($0, /Log[A-Za-z0-9]+:/)) {print_colored($0, RSTART, RLENGTH); next}}
+        {print $0}'
 }
