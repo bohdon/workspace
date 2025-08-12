@@ -143,15 +143,16 @@ _ue-color() {
             print substr(fullstr, start + end)
         }
 
-        /(Error:|FAIL)/ {print "\033[31m" $0 "\033[0m"; next}
-        /Warning:/ {print "\033[33m" $0 "\033[0m"; next}
+        /(Error:|ERROR:|FAIL|Result: Failed)/ {print "\033[31m" $0 "\033[0m"; next}
+        /(Warning:|WARNING:|conflicting instance.*is already running)/ {print "\033[33m" $0 "\033[0m"; next}
         /\*\*\*/ {print "\033[97m" $0 "\033[0m"; next}
         $0 ~ p1 {print "\033[96m" $0 "\033[0m"; next}
         $0 ~ p2 {print "\033[90m" $0 "\033[0m"; next}
-        /(Verbose:|Writing manifest|Reading tag|Creating makefile)/ {print "\033[90m" $0 "\033[0m"; next}
-        /(SUCCESS|up to date)/ {print "\033[32m" $0 "\033[0m"; next}
+        /(Verbose:|Writing manifest|Reading tag|Creating makefile|Log file:)/ {print "\033[90m" $0 "\033[0m"; next}
+        /(SUCCESS|Result: Succeeded|up to date)/ {print "\033[32m" $0 "\033[0m"; next}
         /(Running|Executing Class)/ {print "\033[95m" $0 "\033[0m"; next}
         /Building.*action.*started/ {print "\033[96m" $0 "\033[0m"; next}
+        /\[Adaptive Build\]/ {print "\033[96m" $0 "\033[0m"; next}
         /\[[0-9]+\/[0-9]+\]/ {print "\033[96m" $0 "\033[0m"; next}
         {if (match($0, /Log[A-Za-z0-9]+:/)) {print_colored($0, RSTART, RLENGTH); next}}
         {print $0}'
