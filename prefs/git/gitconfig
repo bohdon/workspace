@@ -73,6 +73,9 @@
 
 [apply]
 	whitespace = warn
+[core]
+	# change git diff tab width to 4
+	pager = less -x1,5
 [color]
 	diff = auto
 	status = auto
