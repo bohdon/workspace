@@ -25,6 +25,7 @@ alias r="p4 reconcile -m"
 alias rk="p4 revert -k"
 alias notify="notify.sh"
 alias bigdirs='du -h ./ | grep -v "^-1" | grep "^[0-9]\\+G"'
+alias c='pygmentize -g'
 
 # find files, and `ls -l` them
 find_ls() {

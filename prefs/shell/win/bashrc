@@ -143,8 +143,8 @@ _ue-color() {
             print substr(fullstr, start + end)
         }
 
-        /(Error:|ERROR:|FAIL|Result: Failed)/ {print "\033[31m" $0 "\033[0m"; next}
-        /(Warning:|WARNING:|conflicting instance.*is already running)/ {print "\033[33m" $0 "\033[0m"; next}
+        /([Ee]rror:|: .* [Ee]rror|ERROR:|FAIL|Result: Failed)/ {print "\033[31m" $0 "\033[0m"; next}
+        /([Ww]arning:|WARNING:|DEPRECATED|deprecated|conflicting instance.*is already running)/ {print "\033[33m" $0 "\033[0m"; next}
         /\*\*\*/ {print "\033[97m" $0 "\033[0m"; next}
         $0 ~ p1 {print "\033[96m" $0 "\033[0m"; next}
         $0 ~ p2 {print "\033[90m" $0 "\033[0m"; next}
