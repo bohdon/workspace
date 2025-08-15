@@ -77,7 +77,7 @@ sp() {
     fi
 
     # include project name in prompt
-    PS1='\[\033]0;${PROJ:+($PROJ) }\W\007\]${PROJ:+\033[35m($PROJ)\033[00m }\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='\[\033]0;(${PROJ}) \W\007\033[35m\]($PROJ)\[\033[00m\] \[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
     # cd to default root
     if [[ ! -z ${SETPROJ_ROOT} ]]; then
