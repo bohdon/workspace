@@ -26,6 +26,7 @@ alias rk="p4 revert -k"
 alias notify="notify.sh"
 alias bigdirs='du -h ./ | grep -v "^-1" | grep "^[0-9]\\+G"'
 alias c='pygmentize -g'
+alias grep='grep --color=always'
 
 # find files, and `ls -l` them
 find_ls() {
@@ -47,6 +48,10 @@ fw() {
 
 fr() {
     find_ls "$@" ! \( -perm -u=w \)
+}
+
+fe() {
+    find "$@" -type d -empty
 }
 
 dejunk() {
