@@ -73,6 +73,7 @@ ue-build() {
         -set:ProjectPath="${UE_PROJ_ROOT}" \
         -set:TargetPlatforms=Win64 \
         -set:TargetConfigurations="${configs}" \
+        -set:GenericCompileArguments="-Verbose" \
         -Target="${target}" \
         ${args} | _ue-color
 }
@@ -98,6 +99,7 @@ ue-package() {
         -set:ProjectPath="${UE_PROJ_ROOT}" \
         -set:TargetPlatforms="${platform}" \
         -set:PackageConfigurations="${configs}" \
+        -set:GenericCompileArguments="-Verbose" \
         -Target="${UE_PROJ_NAME} Stage ${platform}" \
         "$@" | _ue-color "LogCook" "(config file|LogIoStore|LogZen)"
 }
@@ -143,13 +145,13 @@ _ue-color() {
             print substr(fullstr, start + end)
         }
 
+        /(SUCCESS|Success|Result: Succeeded|up to date)/ {print "\033[32m" $0 "\033[0m"; next}
         /([Ee]rror:|: .* [Ee]rror|ERROR:|FAIL|Result: Failed)/ {print "\033[31m" $0 "\033[0m"; next}
         /([Ww]arning:|WARNING:|DEPRECATED|deprecated|conflicting instance.*is already running)/ {print "\033[33m" $0 "\033[0m"; next}
         /\*\*\*/ {print "\033[97m" $0 "\033[0m"; next}
         $0 ~ p1 {print "\033[96m" $0 "\033[0m"; next}
         $0 ~ p2 {print "\033[90m" $0 "\033[0m"; next}
         /(Verbose:|Writing manifest|Reading tag|Creating makefile|Log file:)/ {print "\033[90m" $0 "\033[0m"; next}
-        /(SUCCESS|Result: Succeeded|up to date)/ {print "\033[32m" $0 "\033[0m"; next}
         /(Running|Executing Class)/ {print "\033[95m" $0 "\033[0m"; next}
         /Building.*action.*started/ {print "\033[96m" $0 "\033[0m"; next}
         /\[Adaptive Build\]/ {print "\033[96m" $0 "\033[0m"; next}
