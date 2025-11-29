@@ -28,6 +28,35 @@ alias bigdirs='du -h ./ | grep -v "^-1" | grep "^[0-9]\\+G"'
 alias c='pygmentize -g'
 alias grep='grep --color=always'
 
+# cross-platform symlink util
+link2() {
+    if [[ "$#" -ne 2 ]] ; then
+        echo 'usage: link2 src dst'
+        return
+    fi
+
+    if [ ! -e "$1" ]; then
+        echo "'$1' does not exist" >&2
+        return
+    fi
+
+    if [[ -n "$WINDIR" ]]; then
+        # use mklink windows
+        # determine if the link is a directory
+        # also convert '/' to '\'
+        win_src=$(cygpath -aw "$1")
+        win_dst=$(cygpath -aw "$2")
+        if [[ -d "$1" ]]; then
+            cmd <<< "mklink /D \"${win_dst}\" \"${win_src}\"" > /dev/null
+        else
+            cmd <<< "mklink \"${win_dst}\" \"${win_src}\"" > /dev/null
+        fi
+    else
+        # use ln everywhere else
+        ln -sf "$1" "$2"
+    fi
+}
+
 # find files, and `ls -l` them
 find_ls() {
     [[ $1 ]] && path="$1" || path="."
