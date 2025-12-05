@@ -23,7 +23,6 @@ alias charm="pycharm.cmd"
 alias cdu='cd ${UE_ROOT}'
 alias cdp='cd ${UE_PROJ_ROOT}'
 alias ue='start "${UE_ROOT}/Engine/Binaries/Win64/UnrealEditor.exe" ${UE_PROJ_NAME} -skipcompile'
-alias ue-game='start "${UE_ROOT}/Engine/Binaries/Win64/UnrealEditor.exe" ${UE_PROJ_NAME} -skipcompile -game'
 alias ue-ide='rider ${UE_SLN:-${UE_ROOT}/UE5.sln}'
 alias ubt='"${UE_ROOT}/Engine/Build/BatchFiles/RunUBT.bat"'
 alias uat='"${UE_ROOT}/Engine/Build/BatchFiles/RunUAT.bat"'
@@ -32,6 +31,8 @@ alias insights='start ${UE_ROOT}/Engine/Binaries/Win64/UnrealInsights.exe'
 alias uba='${UE_ROOT}/Engine/Binaries/Win64/UnrealBuildAccelerator/x64/UbaVisualizer.exe'
 alias ue-appdata='code "${HOME}/AppData/Roaming/Unreal Engine/" "${HOME}/AppData/Local/Unreal Engine/" "${HOME}/AppData/Local/UnrealBuildTool/" "${HOME}/AppData/Local/UnrealGameSync/"'
 alias ue-logs='code "${UE_PROJ_ROOT}/Saved/Logs" "${UE_ROOT}/Engine/Programs/AutomationTool/Saved/Logs" "${UE_ROOT}/Engine/Programs/UnrealBuildTool"'
+alias game='start "${UE_PROJ_ROOT}/Saved/StagedBuilds/Windows/${UE_PROJ_NAME}.exe" -log'
+alias server='start "${UE_PROJ_ROOT}/Saved/StagedBuilds/WindowsServer/${UE_PROJ_NAME}Server.exe" -log'
 
 ue-cmd() {
     "${UE_ROOT}/Engine/Binaries/Win64/UnrealEditor-Cmd.exe" "${UE_PROJ_NAME}" -stdout -FullStdOutLogOutput "$@"
@@ -90,18 +91,27 @@ ue-cook() {
 # Run BuildAndTestProject.xml to build, cook, and stage for Windows
 ue-package() {
     platform="Win64"
+    target="${2:-${UE_PROJ_NAME} Stage ${platform}}"
     configs=$(_ue-get-configs "$1")
     configs=${configs:-Development}
+    shift
     shift
     uat BuildGraph \
         -Script="Engine/Build/Graph/Tasks/BuildAndTestProject.xml" \
         -set:ProjectName="${UE_PROJ_NAME}" \
         -set:ProjectPath="${UE_PROJ_ROOT}" \
+        -set:TargetName="${UE_PROJ_NAME}" \
         -set:TargetPlatforms="${platform}" \
         -set:PackageConfigurations="${configs}" \
         -set:GenericCompileArguments="-Verbose" \
-        -Target="${UE_PROJ_NAME} Stage ${platform}" \
+        -set:ExtraCookArguments="-cookincremental" \
+        -Target="${target}" \
         "$@" | _ue-color "LogCook" "(config file|LogIoStore|LogZen)"
+}
+
+ue-package-server() {
+    platform="Win64"
+    ue-package "$1" "${UE_PROJ_NAME} Stage ${platform};${UE_PROJ_NAME} Stage ${platform} Server"
 }
 
 # Parse for d, t, or s and return `Development+Test+Shipping`
