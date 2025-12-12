@@ -23,6 +23,7 @@ alias d='docker'
 alias d-c='docker-compose'
 alias r="p4 reconcile -m"
 alias rk="p4 revert -k"
+alias reopen-resolves="p4 -ztag -F %clientFile% resolve -n | p4 -x - reopen -c"
 alias notify="notify.sh"
 alias bigdirs='du -h ./ | grep -v "^-1" | grep "^[0-9]\\+G"'
 alias c='pygmentize -g'
