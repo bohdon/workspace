@@ -24,8 +24,8 @@
 	la =log --graph --pretty=format':%C(auto)%h%C(auto)%d%Creset %s %C(white) %an, %ar%Creset' --all
 
 	# Alternate logging displays
-	hist = log --graph --pretty=format':%C(yellow)%h%C(blue)%d %C(yellow)%s %C(white)%an %ar %Creset' --stat --date-order
-	history = log --graph --pretty=format':%C(yellow)%h%C(blue)%d %C(yellow)%s %C(white)%an %ar %Creset' -p --date-order
+	logs = log --graph --pretty=format':%C(yellow)%h%C(blue)%d %C(yellow)%s %C(white)%an %ar %Creset' --stat --date-order
+	logdiff = log --graph --pretty=format':%C(yellow)%h%C(blue)%d %C(yellow)%s %C(white)%an %ar %Creset' -p --date-order
 
 	# show newly fetched commits
 	new = !git l HEAD^1..`git rev-parse @{u}`
