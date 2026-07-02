@@ -18,6 +18,7 @@ alias ll="ls -AFhl"
 
 # apps and tools
 alias g='git'
+alias l='lore'
 alias pc='pre-commit'
 alias d='docker'
 alias d-c='docker-compose'
