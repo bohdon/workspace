@@ -42,6 +42,7 @@ ue-cmd() {
 # Use any combination of `dtse` args (dev, test, shipping editor), e.g. `ue-build de` for dev + editor only
 # Run with -ListOnly to view other targets
 ue-build() {
+    script="${UE_BUILD_SCRIPT:-Engine/Build/Graph/Tasks/BuildAndTestProject.xml}"
     # default to game target only
     target="${UE_PROJ_NAME} Compile Editor Win64;${UE_PROJ_NAME} Compile Win64"
     configs="Development"
@@ -69,7 +70,7 @@ ue-build() {
     fi
 
     uat BuildGraph \
-        -Script="Engine/Build/Graph/Tasks/BuildAndTestProject.xml" \
+        -Script="${script}" \
         -set:ProjectName="${UE_PROJ_NAME}" \
         -set:ProjectPath="${UE_PROJ_ROOT}" \
         -set:TargetPlatforms=Win64 \
@@ -90,6 +91,7 @@ ue-cook() {
 
 # Run BuildAndTestProject.xml to build, cook, and stage for Windows
 ue-package() {
+    script="${UE_BUILD_SCRIPT:-Engine/Build/Graph/Tasks/BuildAndTestProject.xml}"
     platform="Win64"
     target="${2:-${UE_PROJ_NAME} Stage ${platform}}"
     configs=$(_ue-get-configs "$1")
@@ -97,7 +99,7 @@ ue-package() {
     shift
     shift
     uat BuildGraph \
-        -Script="Engine/Build/Graph/Tasks/BuildAndTestProject.xml" \
+        -Script="${script}" \
         -set:ProjectName="${UE_PROJ_NAME}" \
         -set:ProjectPath="${UE_PROJ_ROOT}" \
         -set:TargetName="${UE_PROJ_NAME}" \
