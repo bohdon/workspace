@@ -1,0 +1,38 @@
+{
+  "$help": "https://aka.ms/terminal-documentation",
+  "$schema": "https://aka.ms/terminal-profiles-schema",
+  "actions": [
+    {
+      "command": {
+        "action": "globalSummon"
+      },
+      "id": "User.globalSummon.51A3D78C"
+    }
+  ],
+  "alwaysShowNotificationIcon": false,
+  "copyFormatting": "none",
+  "copyOnSelect": false,
+  "defaultProfile": "{b13093d2-b61f-48a8-a561-558afd31b91c}",
+  "initialRows": 50,
+  "keybindings": [
+    {
+      "id": "User.globalSummon.51A3D78C",
+      "keys": "win+`"
+    }
+  ],
+  "profiles": {
+    "defaults": {
+      "colorScheme": "Dark+",
+      "startingDirectory": "%USERPROFILE%"
+    },
+    "list": [
+      {
+        "commandline": "\"C:\\Program Files\\Git\\bin\\bash.exe\" --login -i",
+        "guid": "{b13093d2-b61f-48a8-a561-558afd31b91c}",
+        "hidden": false,
+        "icon": "\ue756",
+        "name": "Git Bash"
+      }
+    ]
+  }
+}

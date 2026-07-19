@@ -7,7 +7,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     os_name="mac"
     installer="brew"
     bashrc_file="$HOME/.zshrc"
-elif [[ "$OSTYPE" == "msys" ]]; then
+elif [[ "$OSTYPE" == "cygwin" ]]; then
     os_name="win"
     installer="choco"
     bashrc_file="$HOME/.bash_profile"

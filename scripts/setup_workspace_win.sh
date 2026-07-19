@@ -9,6 +9,21 @@ fi
 # bashrc
 if should_install "bashrc"; then
     install_bashrc "${workspace_dir}/prefs/shell/${os_name}/bashrc"
+    cp "${workspace_dir}/prefs/shell/win/inputrc" "$HOME/.inputrc"
+fi
+
+# Terminal
+if should_install "Terminal prefs"; then
+    mkdir -p "$HOME/AppData/Local/Microsoft/WIndows Terminal/Fragments/$USERNAME"
+    cp -av "prefs/Terminal/settings.json" "$HOME/AppData/Local/Microsoft/WIndows Terminal/Fragments/$USERNAME/settings.json"
+    powershell -ExecutionPolicy Bypass -File "prefs/Terminal/InstallTerminalSettings.ps1"
+fi
+
+# Git Config
+if should_install "Git Config"; then
+    set -x
+    git config --global include.path "${workspace_dir}/prefs/git/gitconfig"
+    { set +x; } 2>/dev/null
 fi
 
 # Explorer Settings
@@ -34,18 +49,6 @@ fi
 # VS Code
 if should_install "VS Code prefs"; then
     cp -av "prefs/Code/win-linux/." "$HOME/AppData/Roaming/Code/"
-fi
-
-# Git Config
-if should_install "Git Config"; then
-    set -x
-    git config --global include.path "${workspace_dir}/prefs/git/gitconfig"
-    { set +x; } 2>/dev/null
-fi
-
-# ConEmu
-if should_install "ConEmu prefs"; then
-    cp -av "prefs/ConEmu/ConEmu.xml" "$HOME/AppData/Roaming/"
 fi
 
 # AutoHotkey utils

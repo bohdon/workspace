@@ -8,10 +8,6 @@ fi
 
 pkgs=""
 
-if should_install "ConEmu"; then
-    pkgs="${pkgs} conemu"
-fi
-
 if should_install "AutoHotkey"; then
     pkgs="${pkgs} autohotkey.portable"
 fi
