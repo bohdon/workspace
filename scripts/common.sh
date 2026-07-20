@@ -22,15 +22,16 @@ fi
 
 # simple cross-platform symlink util
 link() {
+    echo -e "linking \033[36m${2}\033[0m -> ${1}"
     # use mklink if on windows
     if [[ -n "$WINDIR" ]]; then
         # determine if the link is a directory
         # also convert '/' to '\'
         if [[ -d "$1" ]]; then
-            cmd <<<"mklink /D \"$(cygpath -w \"$2\")\" \"$(cygpath -w \"$1\")\"" >/dev/null
+            cmd <<<"mklink /D \"$(cygpath -w "$2")\" \"$(cygpath -w "$1")\"" >/dev/null
             # " # syntax highlight fix
         else
-            cmd <<<"mklink \"$(cygpath -w \"$2\")\" \"$(cygpath -w \"$1\")\"" >/dev/null
+            cmd <<<"mklink \"$(cygpath -w "$2")\" \"$(cygpath -w "$1")\"" >/dev/null
             # " # syntax highlight fix
         fi
     else
