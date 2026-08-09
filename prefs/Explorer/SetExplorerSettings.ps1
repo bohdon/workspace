@@ -30,6 +30,16 @@ if (-not (Test-Path "HKCU:\Software\Policies\Microsoft\Windows\Explorer")) {
 }
 Set-ItemProperty -Path HKCU:\Software\Policies\Microsoft\Windows\Explorer -Name DisableSearchBoxSuggestions -Type DWord -Value 1 # default 0 / non-existent
 
+# Disable both the layout-switch and language-switch hotkeys (sets them to "Not Assigned")
+$key = 'HKCU:\Keyboard Layout\Toggle'
+
+if (-not (Test-Path $key)) {
+    New-Item -Path $key -Force | Out-Null
+}
+
+Set-ItemProperty -Path $key -Name "Hotkey" -Value '3' -Type String  # default Ctrl+Shift (layout)
+Set-ItemProperty -Path $key -Name "Language Hotkey" -Value '3' -Type String  # default Alt+Shift (language)
+
 # restart explorer
 taskkill /F /IM explorer.exe > $null
 start explorer
