@@ -51,10 +51,14 @@ if should_install "VS Code prefs"; then
     cp -av "prefs/Code/win-linux/." "$HOME/AppData/Roaming/Code/"
 fi
 
-# AutoHotkey utils
-if should_install "AutoHotkey utils"; then
-    set -x
+# Utils
+if should_install "Utils (WindowMover / AlwaysOnTop)"; then
+    # set -x
     link "$(pwd)/utils/ahk/AlwaysOnTop.ahk" "$HOME/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/AlwaysOnTop.ahk"
-    link "$(pwd)/utils/ahk/WindowMover.ahk" "$HOME/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/WindowMover.ahk"
-    { set +x; } 2>/dev/null
+    dotnet build -c Release ./utils/WindowMover
+
+    echo "$(pwd)/utils/WindowMover/bin/Release/net8.0-windows/WindowMover.exe"
+    echo "$(cygpath -w "$(pwd)/utils/WindowMover/bin/Release/net8.0-windows/WindowMover.exe")"
+    link "$(pwd)/utils/WindowMover/bin/Release/net8.0-windows/WindowMover.exe" "$HOME/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/WindowMover.exe"
+    # { set +x; } 2>/dev/null
 fi
