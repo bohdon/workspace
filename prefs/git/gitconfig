@@ -19,16 +19,19 @@
 	current-branch = !git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||'
 	ignoreperm = config core.filemode false
 
-	# Log display from screencast, with train tracks.
-	l = log --graph --pretty=format':%C(auto)%h%C(auto)%d%Creset %s %C(white) %an, %ar%Creset'
-	la =log --graph --pretty=format':%C(auto)%h%C(auto)%d%Creset %s %C(white) %an, %ar%Creset' --all
+	# Log graph, oneline with train tracks.
+	l = log --graph --decorate --boundary --date-order --date=short --color=always --pretty=format:'%C(auto)%h %C(dim)%ad%C(auto)%d %s'
+	la = log --graph --decorate --boundary --date-order --date=short --color=always --pretty=format:'%C(auto)%h %C(dim)%ad%C(auto)%d %s' --all
 
 	# Alternate logging displays
-	logs = log --graph --pretty=format':%C(yellow)%h%C(blue)%d %C(yellow)%s %C(white)%an %ar %Creset' --stat --date-order
-	logdiff = log --graph --pretty=format':%C(yellow)%h%C(blue)%d %C(yellow)%s %C(white)%an %ar %Creset' -p --date-order
+	logs = log --graph --decorate --boundary --date-order --date=short --color=always --pretty=format:'%C(auto)%h %C(dim)%ad%C(auto)%d %s' --stat --date-order
+	logdiff = log --graph --decorate --boundary --date-order --date=short --color=always --pretty=format:'%C(auto)%h %C(dim)%ad%C(auto)%d %s' -p --date-order
+
+	# find branches that contain a commit downstream
+	with = branch --all --contains
 
 	# show newly fetched commits
-	new = !git l HEAD^1..`git rev-parse @{u}`
+	new = !git l HEAD^1...`git rev-parse @{u}`
 
 	# Usage: git track origin/feature-123-login-form
 	track = checkout -t
