@@ -7,6 +7,9 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "minimap": {
+    "show": "always",
+  },
   "show_wrap_guides": true,
   "preferred_line_length": 120,
   "cli_default_open_behavior": "existing_window",

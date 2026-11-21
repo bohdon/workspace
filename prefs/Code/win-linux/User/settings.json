@@ -1,15 +1,22 @@
 {
-    "editor.lineHeight": 22,
-    "editor.snippetSuggestions": "top",
-    "editor.formatOnPaste": true,
-    "editor.renderWhitespace": "boundary",
-    "files.exclude": {
-        "**/*.pyc": true
-    },
-    "workbench.startupEditor": "none",
-    "window.enableMenuBarMnemonics": false,
-    "files.associations": {
-        "*.json": "jsonc"
-    },
-    "security.workspace.trust.enabled": false
+  "editor.lineHeight": 22,
+  "editor.snippetSuggestions": "top",
+  "editor.formatOnPaste": true,
+  "editor.renderWhitespace": "boundary",
+  "workbench.tree.indent": 16,
+  "files.exclude": {
+    "**/*.pyc": true,
+  },
+  "files.associations": {
+    "*.json": "jsonc",
+  },
+  "workbench.startupEditor": "none",
+  "window.enableMenuBarMnemonics": false,
+  "security.workspace.trust.enabled": false,
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features",
+  },
 }
