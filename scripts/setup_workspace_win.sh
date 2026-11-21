@@ -51,6 +51,13 @@ if should_install "VS Code prefs"; then
     cp -av "prefs/Code/win-linux/." "$HOME/AppData/Roaming/Code/"
 fi
 
+# Zed
+if should_install "Zed prefs"; then
+    mkdir -p "$HOME/AppData/Roaming/Zed"
+    cp -av "prefs/Zed/keymap.json" "$HOME/AppData/Roaming/Zed/keymap.json"
+    cp -av "prefs/Zed/settings.json" "$HOME/AppData/Roaming/Zed/settings.json"
+fi
+
 # Utils
 if should_install "Utils (WindowMover / AlwaysOnTop)"; then
     # set -x

@@ -16,4 +16,5 @@ Run `setup.sh` to see the available commands.
 - AutoHotkey scripts to move windows just like on linux
 - `gitconfig` aliases
 - VS Code prefs and keybindings for ijkl navigation
+- Zed settings and keymap
 - General system prefs and hotkeys

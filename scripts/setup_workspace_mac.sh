@@ -16,6 +16,13 @@ if should_install "VS Code prefs"; then
     cp -av "prefs/Code/mac/." "$HOME/Library/Application Support/Code/"
 fi
 
+# Zed
+if should_install "Zed prefs"; then
+    mkdir -p "$HOME/.config/zed"
+    cp -av "prefs/Zed/keymap.json" "$HOME/.config/zed/keymap.json"
+    cp -av "prefs/Zed/settings.json" "$HOME/.config/zed/settings.json"
+fi
+
 # Git Config
 if should_install "Git Config"; then
     set -x

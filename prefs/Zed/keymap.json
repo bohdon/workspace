@@ -1,0 +1,90 @@
+// Zed keymap
+//
+// Mirrors the VS Code keybindings.json: navigate/select with alt + i j k l h ;,
+// words with alt+ctrl + j/l, move lines with alt+ctrl + i/k.
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+
+[
+  {
+    "context": "Editor && mode == full",
+    "use_key_equivalents": true,
+    "bindings": {
+      // move cursor
+      "alt-i": "editor::MoveUp",
+      "alt-k": "editor::MoveDown",
+      "alt-j": "editor::MoveLeft",
+      "alt-l": "editor::MoveRight",
+      "alt-h": ["editor::MoveToBeginningOfLine", { "stop_at_soft_wraps": true, "stop_at_indent": true }],
+      "alt-;": ["editor::MoveToEndOfLine", { "stop_at_soft_wraps": true }],
+
+      // move and select
+      "alt-shift-i": "editor::SelectUp",
+      "alt-shift-k": "editor::SelectDown",
+      "alt-shift-j": "editor::SelectLeft",
+      "alt-shift-l": "editor::SelectRight",
+      "alt-shift-h": ["editor::SelectToBeginningOfLine", { "stop_at_soft_wraps": true, "stop_at_indent": false }],
+      "alt-shift-;": ["editor::SelectToEndOfLine", { "stop_at_soft_wraps": true }],
+
+      // move by word
+      "alt-ctrl-j": "editor::MoveToPreviousSubwordStart",
+      "alt-ctrl-l": "editor::MoveToNextSubwordEnd",
+      "alt-ctrl-shift-j": "editor::SelectToPreviousSubwordStart",
+      "alt-ctrl-shift-l": "editor::SelectToNextSubwordEnd",
+
+      // move line up / down
+      "alt-ctrl-i": "editor::MoveLineUp",
+      "alt-ctrl-k": "editor::MoveLineDown",
+
+      // multi-select occurrences
+      "shift-alt-.": ["editor::SelectNext", { "replace_newest": false }],
+      "shift-alt-,": ["editor::SelectPrevious", { "replace_newest": false }],
+      // skip one match instead of adding it
+      "ctrl-shift-alt-.": ["editor::SelectNext", { "replace_newest": true }],
+
+      // go to
+      "alt-shift-o": "file_finder::Toggle",
+      "alt-shift-s": "project_symbols::Toggle",
+      "alt-g": "editor::GoToDefinition",
+      "alt-m": "outline::Toggle",
+      "ctrl-k ctrl-k": "editor::ToggleBookmark",
+
+      // sort lines / format document
+      "ctrl-shift-alt-o": "editor::SortLinesCaseInsensitive",
+      "ctrl-alt-enter": "editor::Format",
+
+      // source control
+      "ctrl-alt-shift-n": "editor::GoToNextChange",
+      "ctrl-alt-shift-p": "editor::GoToPreviousChange",
+    },
+    "unbind": {
+      "ctrl-shift-n": "file_finder::Toggle",
+      "ctrl-f12": "outline::Toggle"
+    },
+  },
+  {
+    "context": "Workspace",
+    "unbind": {
+      // keep as new window
+      "ctrl-shift-n": "file_finder::Toggle",
+    },
+  },
+  {
+    "context": "Workspace",
+    "unbind": {
+      // eats up ctrl-k combo keys
+      "ctrl-k": "git_panel::FocusEditor",
+    },
+  },
+  {
+    "context": "Editor && mode == full",
+    "bindings": {
+    }
+  },
+  {
+    "context": "Editor && mode == full",
+    "unbind": {
+    }
+  }
+]
