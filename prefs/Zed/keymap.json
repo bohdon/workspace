@@ -8,6 +8,13 @@
 
 [
   {
+    "use_key_equivalents": true,
+    "bindings": {
+      "alt-shift-o": "file_finder::Toggle",
+      "alt-shift-s": "project_symbols::Toggle",
+    },
+  },
+  {
     "context": "Editor && mode == full",
     "use_key_equivalents": true,
     "bindings": {
@@ -44,8 +51,6 @@
       "ctrl-shift-alt-.": ["editor::SelectNext", { "replace_newest": true }],
 
       // go to
-      "alt-shift-o": "file_finder::Toggle",
-      "alt-shift-s": "project_symbols::Toggle",
       "alt-g": "editor::GoToDefinition",
       "alt-m": "outline::Toggle",
       "ctrl-k ctrl-k": "editor::ToggleBookmark",
@@ -60,7 +65,7 @@
     },
     "unbind": {
       "ctrl-shift-n": "file_finder::Toggle",
-      "ctrl-f12": "outline::Toggle"
+      "ctrl-f12": "outline::Toggle",
     },
   },
   {
@@ -77,14 +82,4 @@
       "ctrl-k": "git_panel::FocusEditor",
     },
   },
-  {
-    "context": "Editor && mode == full",
-    "bindings": {
-    }
-  },
-  {
-    "context": "Editor && mode == full",
-    "unbind": {
-    }
-  }
 ]
