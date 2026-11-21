@@ -4,7 +4,7 @@ Tools for setting up workspace preferences, installing common apps and developme
 
 ## Install
 
-Run in bash (Git for Windows) to clone and run the setup script.
+Run in bash as administrator (Git for Windows) to clone and run the setup script.
 
 - `curl -fsSL https://raw.github.com/bohdon/workspace/main/install.sh | bash`
 
