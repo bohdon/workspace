@@ -14,6 +14,7 @@ workspace_dir=$(readlink -f "$(dirname "${BASH_SOURCE[0]}")/../../..")
 PS1='\[\033]0;\W\007\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
 alias open='start' # universal open command
+alias ssh='/c/Windows/System32/OpenSSH/ssh.exe' # git distributed ssh crashes on window resize with OpenSSH
 alias rider="rider.cmd"
 alias charm="pycharm.cmd"
 
